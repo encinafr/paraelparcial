@@ -64,6 +64,8 @@ int main()
             case 9 :
                 mostrarProductos(NewProducto,UNI);
                 system("pause");
+                promedioPrecio(NewProducto,UNI);
+                system("pause");
             break;
             case 10 :
                     mostrarPersonas(NewUsuario,TAM);

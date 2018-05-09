@@ -859,3 +859,32 @@ void mostrarProductosPorID(Producto vec[] , int tam,Usuario arrays[], int larg)
         return indice;
       }
  }
+
+/*
+esta funcion te muestra el meyor el problema es que el prime mayorno lo imprime entonnces
+tenes que hacer un contador de productos y cuando el contador sea osea se ingrese un solo
+producto como es el unico que hay ese va a ser tu precio mayor y lo imprimis y si no llamas a esta funcion ;
+y si tiene un id incremental o legajo preguntas si el lagejo es igual a uno por que significa que solo hay
+ una persona o un solo producto en este caso
+
+*/
+ void promedioPrecio(Producto vec[],int tam){
+    int i,j;
+    Producto aux;
+   float mayor=0;
+    for(i=0;i<tam;i++){
+        for(j=i+1;j<tam;j++){
+                if(vec[i].precio>vec[j].precio){
+                aux.precio=vec[i].precio;
+                vec[i].precio=vec[j].precio;
+                vec[j].precio=aux.precio;
+            }
+
+        }
+
+    }
+    printf("el precio mayor es: %.2f",aux.precio);
+
+
+
+ }

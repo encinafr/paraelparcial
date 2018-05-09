@@ -47,6 +47,7 @@ void agregarProducto(Producto vec[], int tam,Usuario arrays[], int tamanio);
 void mostrarProductosPorID(Producto vec[] , int tam,Usuario arrays[], int larg);
 void compraProducto(Producto vec[],int tam);
 int buscaPorNombre(Usuario vec[],int tam,char nombre[]);
+void promedioPrecio(Producto vec[],int tam);
 
 
 #endif // FUNCIONES_H_INCLUDED
