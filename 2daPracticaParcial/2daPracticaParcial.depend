@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1525787363 source:c:\users\encin\desktop\2dapracticaparcial\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+
+1525833913 c:\users\encin\desktop\2dapracticaparcial\funciones.h
+
+1525836277 source:c:\users\encin\desktop\2dapracticaparcial\funiones.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+
