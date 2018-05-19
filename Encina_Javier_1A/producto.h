@@ -39,6 +39,8 @@ int menuListar();
 void Informes(Producto vec[],int tam);
 void Listados(Producto vec[],int tam,Proveedor vec2[],int tam2);
 float sumadorImportes(Producto vec [] , int tam);
+float menorPrecio(Producto vec[],int arrayLenght);
+float mayorPrecio(Producto vec[],int tam);
 
 void mostrarProductosPorID(Producto vec[] , int tam,Proveedor arrays[], int larg);
 void mostrarProducto(Producto vec);
@@ -50,6 +52,10 @@ void ProductoMenorDiez(Producto vec[],int tam);
 void MostrarMenorDiez(Producto vec[],int tam);
 void MostrarCantMayorDiez(Producto vec[],int tam);
 void mostrarProductaMasBarato(Producto vec[] , int tam,Proveedor arrays[], int larg);
+void mostrarProductosProveedor(Producto vec[] , int tam,Proveedor arrays[], int larg);
+void mostrarProductaMasCaro(Producto vec[] , int tam,Proveedor arrays[], int larg);
+
+
 void hardCodeProveedores(Proveedor ProveedorArray[],int POS,char nombreAux[],int codeAux);
 void hardCodeProducto(Producto ProductoArray[],int POS,char nombreAux[],char Descripcion[],int codeAux,int codeAux2,int Stock,int Importe);
 

@@ -11,14 +11,27 @@
 	<stdlib.h>
 	"producto.h"
 
-1526268668 source:e:\encina_javier_1a\main.c
+1526565692 source:e:\encina_javier_1a\main.c
 	<stdio.h>
 	<stdlib.h>
 	"producto.h"
 
-1526269016 e:\encina_javier_1a\producto.h
+1526568276 e:\encina_javier_1a\producto.h
 
-1526269196 source:e:\encina_javier_1a\producto.c
+1526565628 source:e:\encina_javier_1a\producto.c
+	<stdio.h>
+	<stdlib.h>
+	"producto.h"
+	<string.h>
+
+1526764862 source:c:\users\encin\desktop\encina_javier_1a\main.c
+	<stdio.h>
+	<stdlib.h>
+	"producto.h"
+
+1526765729 c:\users\encin\desktop\encina_javier_1a\producto.h
+
+1526765773 source:c:\users\encin\desktop\encina_javier_1a\producto.c
 	<stdio.h>
 	<stdlib.h>
 	"producto.h"
