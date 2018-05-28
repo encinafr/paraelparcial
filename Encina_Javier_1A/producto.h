@@ -41,19 +41,23 @@ void Listados(Producto vec[],int tam,Proveedor vec2[],int tam2);
 float sumadorImportes(Producto vec [] , int tam);
 float menorPrecio(Producto vec[],int arrayLenght);
 float mayorPrecio(Producto vec[],int tam);
+int contSuperaPromedio(Producto vec[],int tam);
+int contNoSuperaPromedio(Producto vec[],int tam);
 
-void mostrarProductosPorID(Producto vec[] , int tam,Proveedor arrays[], int larg);
+void mostrarProductosPorID(Producto vec[] , int tam,Proveedor arrays[], int tam1);
 void mostrarProducto(Producto vec);
-void MostrarSuperaPromedio(Producto vec[],int TAM);
+void mostrarProveedorstock(Proveedor array[],int tam,Producto vec[],int tam1);
+void MostrarSuperaPromedio(Producto vec[],int tam);
+void MostrarNoSuperaPromedio(Producto vec[],int tam);
 void mostrarProductosOrdenNombre(Producto vec[],int tam);
 void mostrarProductosOrdenImporte(Producto vec[],int tam);
 void CantidadMayoDiez(Producto vec[],int tam);
 void ProductoMenorDiez(Producto vec[],int tam);
 void MostrarMenorDiez(Producto vec[],int tam);
 void MostrarCantMayorDiez(Producto vec[],int tam);
-void mostrarProductaMasBarato(Producto vec[] , int tam,Proveedor arrays[], int larg);
-void mostrarProductosProveedor(Producto vec[] , int tam,Proveedor arrays[], int larg);
-void mostrarProductaMasCaro(Producto vec[] , int tam,Proveedor arrays[], int larg);
+void mostrarProductaMasBarato(Producto vec[] , int tam,Proveedor arrays[], int tam1);
+void mostrarProductosProveedor(Producto vec[] , int tam,Proveedor arrays[], int tam1);
+void mostrarProductaMasCaro(Producto vec[] , int tam,Proveedor arrays[], int tam1);
 
 
 void hardCodeProveedores(Proveedor ProveedorArray[],int POS,char nombreAux[],int codeAux);

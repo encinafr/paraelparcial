@@ -410,12 +410,10 @@ void mostrarProductosOrdenNombre(Producto vec[],int tam)
     }
 
 }
-/** \brief
+/** \brief Lista los productos ordenados por importe
  *
- * \param
- * \param
- * \return
- *
+ * \param vec EL vetor de productos
+ * \param tam EL tamaño del array
  */
  void mostrarProductosOrdenImporte(Producto vec[],int tam)
 {
@@ -606,10 +604,15 @@ int menuModificaproducto()
     return opcion;
 }
 
+/** \brief Muestra los productos de un proveedor ingresando su id
+ * \param vec Array de productos
+ * \param tam Tamaño del array de productos
+ * \param arrays Array de Proveedores
+ * \param tam1 tamaño del array de proveedores
+ */
 
-void mostrarProductosPorID(Producto vec[] , int tam,Proveedor arrays[], int larg)
+void mostrarProductosPorID(Producto vec[] , int tam,Proveedor arrays[], int tam1)
 {
-
     ordenarPorNombreP(vec, tam);
     int idMostrar;
     char auxProveedor[50];
@@ -617,14 +620,14 @@ void mostrarProductosPorID(Producto vec[] , int tam,Proveedor arrays[], int larg
     int j;
     int esta;
     int estaProveedor;
-    mostrarProveedor(arrays,larg);
+    mostrarProveedor(arrays,tam1);
     printf("Ingrese el id de Proveedor que desea mostrar: ");
                 scanf("%d",&idMostrar);
 
     printf("\n| NOMBRE  |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK | PROVEEDOR");
  for(i=0 ; i < tam ; i++)
     {
-        for(j=0;j<larg;j++)
+        for(j=0 ; j < tam1 ;j++)
         {
             if(arrays[j].estado == 0 && idMostrar == arrays[j].IDProveedor )
             {
@@ -642,13 +645,16 @@ void mostrarProductosPorID(Producto vec[] , int tam,Proveedor arrays[], int larg
 
             }
         }
-
-
     }
-
 }
+/** \brief Muestra todos los productos de todos los provedores
+ * \param vec Array de productos
+ * \param tam Tamaño del array de productos
+ * \param arrays Array de Proveedores
+ * \param tam1 tamaño del array de proveedores
+ */
 
-void mostrarProductosProveedor(Producto vec[] , int tam,Proveedor arrays[], int larg)
+void mostrarProductosProveedor(Producto vec[] , int tam,Proveedor arrays[], int tam1)
 {
 
     ordenarPorNombreP(vec, tam);
@@ -662,7 +668,7 @@ void mostrarProductosProveedor(Producto vec[] , int tam,Proveedor arrays[], int 
     printf("\n            | NOMBRE  |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK |");
  for(i=0 ; i < tam ; i++)
     {
-        for(j=0;j<larg;j++)
+        for(j=0;j<tam1;j++)
         {
             if(arrays[j].estado == 0 && vec[i].idProveedor == arrays[j].IDProveedor )
             {
@@ -675,19 +681,48 @@ void mostrarProductosProveedor(Producto vec[] , int tam,Proveedor arrays[], int 
                 break;
             }
         }
-
-
     }
-
 }
-/** \brief
- *
- * \param
- * \param
- * \return
- *
+/** \brief Muestra el proveedores y los productos con cantidad <= 10
+ * \param vec Array de productos
+ * \param tam1 Tamaño del array de productos
+ * \param array Array de Proveedores
+ * \param tam tamaño del array de proveedores
  */
 
+void mostrarProveedorstock(Proveedor array[],int tam,Producto vec[],int tam1)
+{
+    int flag=0;
+    int i,j;
+    char auxProveedor[50];
+    int stockMenor;
+
+ for(i=0 ; i < tam1 ; i++)
+    {
+        for(j=0;j<tam;j++)
+        {
+
+            if(vec[i].estado2 == 0 && array[j].IDProveedor == vec[i].idProveedor && vec[i].stock <= 10 )
+            {
+                strcpy(auxProveedor,array[j].Descripcion);
+                printf("\n| PROVEEDOR  | PRODUCTO  |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK |");
+                printf("\n|%10s| %10s| %-37s | %9d | %5.2f | %5d |\n",auxProveedor,vec[i].nombreProducto,vec[i].descripcion,vec[i].idProducto,vec[i].precio,vec[i].stock);
+                printf("\n");
+                flag=1;
+                break;
+            }
+        }
+    }
+    if(flag==0){
+        printf("No existe un provedor con un producto cuyo stock sea <= 10\n");
+    }
+}
+/** \brief Muestra los productos con cantidad mayor a 10
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del array
+ *
+ */
 
 void CantidadMayoDiez(Producto vec[],int tam)
 {
@@ -702,11 +737,10 @@ void CantidadMayoDiez(Producto vec[],int tam)
         }
     }
 }
-  /** \brief
+  /** \brief Muestra los productos con cantidad <= 10
    *
-   * \param
-   * \param
-   * \return
+   * \param vec Array de productos
+   * \param tam Tamaño del array
    *
    */
 
@@ -725,12 +759,10 @@ void CantidadMayoDiez(Producto vec[],int tam)
 }
 
 
-/** \brief
+/** \brief Muestra la cantidad de productos con cantidad <= 10
  *
- * \param
- * \param
- * \return
- *
+ * \param vec Array de produtos
+ * \param tam Tamaño del array
  */
 
 void MostrarMenorDiez(Producto vec[],int tam)
@@ -752,12 +784,10 @@ void MostrarMenorDiez(Producto vec[],int tam)
 }
 
 
-/** \brief
+/** \brief Muestra la cantidad de productos con cantidad > 10
  *
- * \param
- * \param
- * \return
- *
+ * \param vec Array de productos
+ * \param tam Tamaño del array
  */
 
 void MostrarCantMayorDiez(Producto vec[],int tam)
@@ -765,9 +795,6 @@ void MostrarCantMayorDiez(Producto vec[],int tam)
     ordenarPorNombreP(vec, tam);
     int i;
     int cont=0;
-
-    //printf("Nombre:\tIDusuario:\tEdad:\tCalificacion\tPassword\tFecha De Nacimiento DIA: MES: ANIO:\n");
-
     for(i=0 ; i < tam ; i++)
     {
         if(vec[i].estado2 == 0 && vec[i].stock>=10)
@@ -777,11 +804,11 @@ void MostrarCantMayorDiez(Producto vec[],int tam)
     }
     printf("La cantidad de productos con importe >= a 10 son: %d",cont);
 }
-/** \brief
+/** \brief Suma el total de importes de los productos
  *
- * \param
- * \param
- * \return
+ * \param vec Array de productos
+ * \param tam Tamaño del array
+ * \return acumulador La suma de los importes
  *
  */
 float sumadorImportes(Producto vec [] , int tam)
@@ -799,6 +826,14 @@ float sumadorImportes(Producto vec [] , int tam)
 
     return acumulador;
 }
+/** \brief Cuenta la cantidad de productos activos
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del array
+ * \return cont La cantidad de productos activos
+ *
+ */
+
 int contadorImportes(Producto vec[] , int tam)
 {
     int cont=0;
@@ -814,6 +849,12 @@ int contadorImportes(Producto vec[] , int tam)
 
     return cont;
 }
+/** \brief Muestra Los productos que superan el promedio de precios
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del array
+ */
+
  void MostrarSuperaPromedio(Producto vec[],int tam){
 
  float promedio;
@@ -822,22 +863,83 @@ int contadorImportes(Producto vec[] , int tam)
  printf("EL PROMEDIO ES %.2f:\n",promedio);
  printf("LOS PRODUCTOS QUE SUPERAN EL PROMEDIO DEL PRECIO SON:");
  for(i=0;i<tam;i++){
-    if(vec[i].estado2==0&&vec[i].precio>promedio)
-    {
-        mostrarProducto(vec[i]);
+    if(vec[i].estado2==0&&vec[i].precio > promedio)
+        {
+            mostrarProducto(vec[i]);
+        }
     }
  }
-
- }
-
-/** \brief
+ /** \brief Muestra Los productos que no superan el promedio de precios
  *
- * \param
- * \param
- * \return
- *
+ * \param vec Array de productos
+ * \param tam Tamaño del array
  */
 
+  void MostrarNoSuperaPromedio(Producto vec[],int tam){
+
+ float promedio;
+ int i;
+ promedio=sumadorImportes(vec,tam)/contadorImportes(vec,tam);
+ printf("EL PROMEDIO ES %.2f:\n",promedio);
+ printf("LOS PRODUCTOS QUE NO SUPERAN EL PROMEDIO DEL PRECIO SON:");
+ for(i=0;i<tam;i++){
+    if(vec[i].estado2==0&&vec[i].precio < promedio)
+        {
+            mostrarProducto(vec[i]);
+        }
+    }
+ }
+/** \brief Contabiliza los productos que superan el promedio de precio
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del array
+ * \return cont La cantidad de productos que superan el promedio de precio
+ */
+
+int contSuperaPromedio(Producto vec[],int tam){
+
+ float promedio;
+ int cont=0;
+ int i;
+ promedio=sumadorImportes(vec,tam)/contadorImportes(vec,tam);
+
+ for(i=0;i<tam;i++){
+    if(vec[i].estado2==0&&vec[i].precio>promedio)
+        {
+            cont ++;
+        }
+     }
+ return cont;
+ }
+/** \brief Contabiliza los productos que no superan el promedio de precio
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del array
+ * \return cont La cantidad de productos que no superan el promedio de precio
+ */
+
+  int contNoSuperaPromedio(Producto vec[],int tam){
+
+ float promedio;
+ int cont=0;
+ int i;
+ promedio=sumadorImportes(vec,tam)/contadorImportes(vec,tam);
+
+ for(i=0;i<tam;i++){
+    if(vec[i].estado2==0&&vec[i].precio<promedio)
+    {
+        cont ++;
+
+    }
+ }
+ return cont;
+ }
+/** \brief Busca el producto con el menor importe
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del vector
+ * \return precioMenor EL precio del producto
+ */
 float menorPrecio(Producto vec[],int tam)
 {
     int i;
@@ -865,38 +967,46 @@ float menorPrecio(Producto vec[],int tam)
 
     return precioMenor;
 }
+/** \brief Muestra el Proveedor del producto mas barato junto con el producto
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del array de productos
+ * \param arrays Array de proveedores
+ * \param tam1 Tamaño del array de proveedores
+ */
 
-void mostrarProductaMasBarato(Producto vec[] , int tam,Proveedor arrays[], int larg)
+void mostrarProductaMasBarato(Producto vec[] , int tam,Proveedor arrays[], int tam1)
 {
     ordenarPorNombreP(vec, tam);
-    int idMostrar;
     char auxProveedor[50];
     int i,j;
-
     float menorprecio;
+
    menorprecio = menorPrecio(vec,tam);
 
     printf("\n| PROVEEDOR | PRODUCTOS ");
     printf("\n            | NOMBRE  |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK |");
  for(i=0 ; i < tam ; i++)
     {
-        for(j=0;j<larg;j++)
+        for(j=0;j<tam1;j++)
         {
-
             if(vec[i].estado2 == 0 && arrays[j].IDProveedor == vec[i].idProveedor && menorprecio == vec[i].precio )
             {
                 strcpy(auxProveedor,arrays[j].Descripcion);
-                printf("\n|%10s|%10s| %-35s | %9d | %5.2f | %5d |",auxProveedor,vec[i].nombreProducto,vec[i].descripcion,vec[i].idProducto,vec[i].precio,vec[i].stock);
+                printf("\n %20s| %-37s | %9d | %5.2f | %5d |\n",vec[i].nombreProducto,vec[i].descripcion,vec[i].idProducto,vec[i].precio,vec[i].stock);
                 printf("\n");
                 break;
             }
         }
-
-
     }
-
-
+    printf("|%10s|\n",auxProveedor);
 }
+/** \brief Busca el producto con el mayor importe
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del vector
+ * \return precioMayor EL precio del producto
+ */
 
 float mayorPrecio(Producto vec[],int tam)
 {
@@ -925,8 +1035,14 @@ float mayorPrecio(Producto vec[],int tam)
 
     return precioMayor;
 }
-
-void mostrarProductaMasCaro(Producto vec[] , int tam,Proveedor arrays[], int larg)
+/** \brief Muestra el Proveedor del producto mas caro junto con el producto
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del array de productos
+ * \param arrays Array de proveedores
+ * \param tam1 Tamaño del array de proveedores
+ */
+void mostrarProductaMasCaro(Producto vec[] , int tam,Proveedor arrays[], int tam1)
 {
          ordenarPorNombreP(vec, tam);
     int idMostrar;
@@ -940,23 +1056,95 @@ void mostrarProductaMasCaro(Producto vec[] , int tam,Proveedor arrays[], int lar
     printf("\n            | NOMBRE  |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK |");
  for(i=0 ; i < tam ; i++)
     {
-        for(j=0;j<larg;j++)
+        for(j=0;j<tam1;j++)
         {
-
             if(vec[i].estado2 == 0 && arrays[j].IDProveedor == vec[i].idProveedor && mayorprecio == vec[i].precio )
             {
                 strcpy(auxProveedor,arrays[j].Descripcion);
-                printf("\n|%10s|%10s| %-35s | %9d | %5.2f | %5d |",auxProveedor,vec[i].nombreProducto,vec[i].descripcion,vec[i].idProducto,vec[i].precio,vec[i].stock);
+                printf("\n%20s| %-37s | %9d | %5.2f | %5d |",vec[i].nombreProducto,vec[i].descripcion,vec[i].idProducto,vec[i].precio,vec[i].stock);
                 printf("\n");
                 break;
             }
         }
-
-
     }
-
+printf("|%10s|\n",auxProveedor);
 
 }
+
+
+int cantidadProductos(int proveedor, Producto lista[], int tam)
+{
+    int i, cont=0;
+
+    for(i=0; i<tam; i++)
+    {
+        if(proveedor == lista[i].idProveedor && lista[i].estado2 == 0)
+        {
+            cont++;
+        }
+    }
+
+    return cont;
+}
+
+int maximoProductos(Proveedor lista[], int tam, Producto lista2[], int tam2)
+{
+    int flag = 0, maximo, cantidad, i;
+
+    for(i=0; i<tam; i++)
+    {
+        cantidad = cantidadProductos(lista[i].IDProveedor, lista2, tam);
+        if(cantidad>maximo || flag==0)
+        {
+            maximo = cantidad;
+            flag = 1;
+        }
+    }
+    return maximo;
+}
+
+int minimoProductos(Proveedor lista[], int tam, Producto lista2[], int tam2)
+{
+    int flag = 0, minimo, cantidad, i;
+
+    for(i=0; i<tam; i++)
+    {
+        cantidad = cantidadProductos(lista[i].IDProveedor, lista2, tam);
+        if(cantidad<minimo || flag==0)
+        {
+            minimo = cantidad;
+            flag = 1;
+        }
+    }
+    return minimo;
+}
+
+void proveedorConMasProductos(Proveedor proveedor[], int tamPROV, Producto productos[], int tamPROD)
+{
+    int i, j, cant;
+
+    system("cls");
+    cant = maximoProductos(proveedor, tamPROV, productos, tamPROD);
+    printf("Proveedor con mas productos:\n\n");
+    for(i=0; i<tamPROV; i++)
+    {
+        if(cant==cantidadProductos(proveedor[i].IDProveedor, productos, tamPROD))
+        {
+            printf("\n\n%s:\n", proveedor[i].Descripcion);
+            for(j=0; j<tamPROD; j++)
+            {
+                if(productos[j].estado2 == 1 && productos[j].idProveedor == proveedor[i].IDProveedor)
+                {
+                    printf("\n%s\t\t$%.2f", productos[j].descripcion, productos[j].precio);
+                }
+            }
+        }
+    }
+    printf("\n\n");
+    system("pause");
+}
+
+
 /**
  * \brief Carga los valores del Proveedor
  * \param ProveedorArray Es el array de Proveedores
@@ -973,9 +1161,6 @@ void hardCodeProveedores(Proveedor ProveedorArray[],int POS,char nombreAux[],int
     ProveedorArray[POS].IDProveedor = codeAux;
     ProveedorArray[POS].estado= 0;
 }
-
-
-
 /**
  * \brief Carga los valores del Producto
  * \param ProductoArray Es el array de Producto
@@ -1000,22 +1185,31 @@ void hardCodeProducto(Producto ProductoArray[],int POS,char nombreAux[],char Des
      ProductoArray[POS].precio = Importe;
     ProductoArray[POS].estado2= 0;
 }
+/** \brief Lista las distintas opciones del usuario
+ *
+ * \param vec Array de producto
+ * \param vec2 Array de Proveedores
+ * \param tam Tamaño del array de productos
+ * \param tam2 Tamaño del array de proveedores
+ */
 
 void Listados(Producto vec[],int tam,Proveedor vec2[],int tam2){
     int opcion=0;
     do{
         switch(menuListar()){
             case 1:
+                printf("Productos Ordenados por Importe:\n");
                 mostrarProductosOrdenImporte(vec,tam);
+                printf("Productos Ordenados por Descripcion:\n");
                 mostrarProductosOrdenNombre(vec,tam);
                 system("pause");
                 break;
             case 2:
-                MostrarCantMayorDiez(vec,tam);
+                CantidadMayoDiez(vec,tam);
                 system("pause");
                 break;
             case 3:
-                MostrarMenorDiez(vec,tam);
+                ProductoMenorDiez(vec,tam);
                 system("pause");
                 break;
             case 4:
@@ -1023,8 +1217,12 @@ void Listados(Producto vec[],int tam,Proveedor vec2[],int tam2){
                 system("pause");
                 break;
             case 5:
+                MostrarNoSuperaPromedio(vec,tam);
+                system("pause");
                 break;
             case 6:
+                mostrarProveedorstock(vec2,tam2,vec,tam);
+                 system("pause");
                 break;
             case 7:
                 mostrarProductosProveedor(vec,tam,vec2,tam2);
@@ -1035,8 +1233,12 @@ void Listados(Producto vec[],int tam,Proveedor vec2[],int tam2){
                  system("Pause");
                 break;
              case 9:
+                 proveedorConMasProductos(vec2,tam2,vec,tam);
+                  system("Pause");
                 break;
              case 10:
+                 proveedorConMasProductos(vec,tam,vec2,tam2);
+                 system("pause");
                 break;
              case 11:
                     mostrarProductaMasCaro(vec,tam,vec2,tam2);
@@ -1053,18 +1255,10 @@ void Listados(Producto vec[],int tam,Proveedor vec2[],int tam2){
 
         }
     }while(opcion!=1);
-
-
-
-
 }
 
-/** \brief
- *
- * \param
- * \param
- * \return
- *
+/** \brief Imprime las distintas opciones a listar
+ * \return opcion La opcion elegida
  */
 
 int menuListar()
@@ -1074,7 +1268,7 @@ int menuListar()
     system("cls");
     printf("1- LISTAR PRODUCTOS ORDENADOS POR IMPORTE('DESCENDENTE') Y POR DESCRIPCION('ASCENDENTE')\n");
     printf("2- LISTAR PRODUCTOS CON CANTIDAD > 10:\n");
-    printf("3- LISTAR PRODUCTOD CON CANTIDAD < 10:\n");
+    printf("3- LISTAR PRODUCTOD CON CANTIDAD <= 10:\n");
     printf("4- LISTAR PRODUCTOS QUE SUPERAN EL PROMEDIO DE LOS IMPORTES\n");
     printf("5- LISTAR PRODUCTOS QUE NO SUPERAN EL PROMEDIO DE LOS IMPORTES\n");
     printf("6- LISTAR PROVEEDORES CUYA CANTIDAD DE PRODUCTOS ES <= 10\n");
@@ -1091,12 +1285,8 @@ int menuListar()
 
     return opcion;
 }
-/** \brief
- *
- * \param
- * \param
- * \return
- *
+/** \brief Imprime los informes que el usuario elige
+ * \return opcion La opcion elegida
  */
 
 int menuInformar()
@@ -1115,13 +1305,32 @@ int menuInformar()
 
     return opcion;
 }
+/** \brief Imrime los informes elegidos por el usuarios
+ *
+ * \param vec Array de productos
+ * \param tam Tamaño del array
+ */
 
 void Informes(Producto vec[],int tam){
     int opcion=0;
+    float sumaImportes;
+    int cantimporte;
     do{switch(menuInformar()){
         case 1:
+           sumaImportes = sumadorImportes(vec,tam);
+           cantimporte = contadorImportes(vec,tam);
+           printf("El total de la suma de los precios es : %2.f \n",sumaImportes);
+           printf("El promedio de los precios es:%.2f\n",sumaImportes/cantimporte);
+           printf("Y los productos que no superan ese promedio son: %d\n",contNoSuperaPromedio(vec,tam));
+           system("pause");
             break;
         case 2:
+           sumaImportes = sumadorImportes(vec,tam);
+           cantimporte = contadorImportes(vec,tam);
+           printf("El total de la suma de los precios es : %2.f \n",sumaImportes);
+           printf("El promedio de los precios es:%.2f\n",sumaImportes/cantimporte);
+           printf("Y los productos que superan ese promedio son: %d\n",contSuperaPromedio(vec,tam));
+           system("pause");
             break;
         case 3:
             MostrarCantMayorDiez(vec,tam);
