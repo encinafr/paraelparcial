@@ -19,6 +19,9 @@ typedef struct {
     int stock;
 }Producto;
 
+int validastring(char cadena[]);
+int validaint(int num);
+
 void inicializarLibre(Proveedor vec[] , int tam);
 int obtenerEspacioLibre(Proveedor lista[],int tam);
 int buscarPorID(Proveedor vec[],int tam, int id);
@@ -58,7 +61,8 @@ void MostrarCantMayorDiez(Producto vec[],int tam);
 void mostrarProductaMasBarato(Producto vec[] , int tam,Proveedor arrays[], int tam1);
 void mostrarProductosProveedor(Producto vec[] , int tam,Proveedor arrays[], int tam1);
 void mostrarProductaMasCaro(Producto vec[] , int tam,Proveedor arrays[], int tam1);
-
+void proveedorConMenosProductos(Proveedor proveedor[], int tamPROV, Producto productos[], int tamPROD);
+void proveedorConMasProductos(Proveedor proveedor[], int tamPROV, Producto productos[], int tamPROD);
 
 void hardCodeProveedores(Proveedor ProveedorArray[],int POS,char nombreAux[],int codeAux);
 void hardCodeProducto(Producto ProductoArray[],int POS,char nombreAux[],char Descripcion[],int codeAux,int codeAux2,int Stock,int Importe);

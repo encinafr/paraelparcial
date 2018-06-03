@@ -4,6 +4,35 @@
 #include "producto.h"
 #include <string.h>
 
+/** \brief Valida que el entero ingresado este en un rango valido
+ *
+ * \param num int el numero a verificar
+ * \return 1 si es valido 0 sino lo es
+ *
+ */
+int validaint(int num){
+int valido=0;
+if(num>0 &&num < 100)
+    {
+        valido=1;
+    }
+return valido;
+}
+/** \brief Valida 1ue la cadena de caracteres contengas al menos 4 caracteres
+ *
+ * \param cadena Cadena a ser verificada
+ * \return 1 si es valido 0 sino lo es
+ *
+ */
+
+int validastring(char cadena[]){
+int valido=0;
+    if(strlen(cadena)>3){
+        valido=1;
+    }
+
+return valido;
+}
 /** \brief Recorre el vector e inicializa el estado en uno
  *
  * \param vec el el vector que le pasamos por parametro
@@ -144,7 +173,7 @@ void ordenarPorNombre(Proveedor vec[] , int tam)
 void agregarProveedor(Proveedor vec[], int tam)
 {
     int indice;
-    int id;
+    int id,auxid;
     int existe;
     char nombreProveedor[50];
     Proveedor nuevoProveedor;
@@ -163,8 +192,16 @@ void agregarProveedor(Proveedor vec[], int tam)
     {
         printf("Ingrese id de Proveedor: ");
          fflush(stdin);
-        scanf("%d", &id);
+        scanf("%d", &auxid);
+        while(!validaint(auxid))
+            {
+                printf("Ingrese un id valido\n");
+                printf("Ingrese id de Proveedor: \n");
+                 fflush(stdin);
+                scanf("%d", &auxid);
 
+            }
+        id = auxid;
         existe = buscarPorID(vec,tam,id);
 
         if(existe != -1)
@@ -179,8 +216,15 @@ void agregarProveedor(Proveedor vec[], int tam)
 
                    printf("Ingrese la descripcion del proveedor: ");
                    fflush(stdin);
-                   scanf("%s",nuevoProveedor.Descripcion);
+                   scanf("%s",nombreProveedor);
+                   while(!validastring(nombreProveedor)){
+                        printf("Nombre muy corto\n");
+                        printf("Ingrese la descripcion del proveedor: ");
+                       fflush(stdin);
+                       scanf("%s",nombreProveedor);
 
+                   }
+                    strcpy(nuevoProveedor.Descripcion,nombreProveedor);
                      vec[indice]=nuevoProveedor;
                  printf("\n Se registro correctamente!!!\n\n");
                     system("\npause\n");
@@ -303,14 +347,14 @@ void ordenarPorNombreP(Producto vec[] , int tam)
 
 void agregarProducto(Producto vec[], int tam,Proveedor arrays[], int tamanio)
 {
-    int indice;
-    int id;
-    int existe;
+    int indice,id,existe,auxstock;
     //char nombreProducto[50];
     Producto nuevoProducto;
-    int idcargar;
+    int idcargar,auxid;
     int encuentra;
     int estaNombre;
+    char nombreProducto[50];
+    char descripcionProducto[100];
     system("cls");
     printf("---REGISTRAR PRODUCTO---\n\n");
 
@@ -325,7 +369,16 @@ void agregarProducto(Producto vec[], int tam,Proveedor arrays[], int tamanio)
     {
 
         printf("Ingrese su Id de Proveedor");
-                scanf("%d",&idcargar);
+                scanf("%d",&auxid);
+                while(!validaint(auxid))
+            {
+                printf("Ingrese un id valido\n");
+                printf("Ingrese id de Proveedor: \n");
+                 fflush(stdin);
+                scanf("%d", &auxid);
+
+            }
+            idcargar=auxid;
                 encuentra = buscarPorID(arrays,tamanio,idcargar);
                 if(encuentra == -1)
                         {
@@ -335,8 +388,16 @@ void agregarProducto(Producto vec[], int tam,Proveedor arrays[], int tamanio)
 
         printf("Ingrese id de Producto: ");
         fflush(stdin);
-        scanf("%d",&id);
+        scanf("%d",&auxid);
+        while(!validaint(auxid))
+            {
+                printf("Ingrese un id valido\n");
+                printf("Ingrese id de Producto: \n");
+                 fflush(stdin);
+                scanf("%d", &auxid);
 
+            }
+           id = auxid;
         existe = buscarPorIDproducto(vec,tam,id);
 
         if(existe != -1)
@@ -352,11 +413,25 @@ void agregarProducto(Producto vec[], int tam,Proveedor arrays[], int tamanio)
 
                    printf("Ingrese Nombre del Producto: ");
                    fflush(stdin);
-                   scanf("%s",nuevoProducto.nombreProducto);
+                   gets(nombreProducto);
+                    while(!validastring(nombreProducto)){
+                        printf("Nombre muy corto\n");
+                        printf("Ingrese Nombre del Producto: ");
+                       fflush(stdin);
+                       scanf("%s",nombreProducto);
 
+                   }
+                    strcpy(nuevoProducto.nombreProducto,nombreProducto);
                    printf("Ingrese Descripcion('No mas de 100 caracteres'): ");
                    fflush(stdin);
-                   gets(nuevoProducto.descripcion);
+                   gets(descripcionProducto);
+                   while(!validastring(descripcionProducto)){
+                        printf("Ampliar Descripcion \n");
+                       fflush(stdin);
+                       gets(descripcionProducto);
+
+                   }
+                    strcpy(nuevoProducto.descripcion,descripcionProducto);
 
                    printf("Ingrese Importe: ");
                    fflush(stdin);
@@ -367,8 +442,14 @@ void agregarProducto(Producto vec[], int tam,Proveedor arrays[], int tamanio)
                    scanf("%f", &nuevoProducto.precio);
                    }
                     printf("Ingrese Cantidad del producto");
-                    scanf("%d",&nuevoProducto.stock);
-
+                    scanf("%d",&auxstock);
+                     while(!validaint(auxstock))
+                        {
+                            printf("Ingrese una cantidad valida\n");
+                             fflush(stdin);
+                            scanf("%d", &auxstock);
+                        }
+                        nuevoProducto.stock=auxstock;
                     vec[indice]=nuevoProducto;
                    printf("\n Se registro correctamente!!!\n\n");
                     system("\npause\n");
@@ -400,12 +481,12 @@ void mostrarProductosOrdenNombre(Producto vec[],int tam)
 {
     int i;
     ordenarPorNombreP(vec,tam);
-    printf("\n| NOMBRE  |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK |");
+    printf("\n| NOMBRE  |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK |ID|");
     for(i=0;i < tam; i++)
     {
         if(vec[i].estado2 == 0)
         {
-          printf("\n%10s| %-35s | %9d | %5.2f | %5d |\n\n",vec[i].nombreProducto,vec[i].descripcion,vec[i].idProducto,vec[i].precio,vec[i].stock);
+          printf("\n%10s| %-35s | %9d | %5.2f | %5d | %3d|\n\n",vec[i].nombreProducto,vec[i].descripcion,vec[i].idProducto,vec[i].precio,vec[i].stock,vec[i].idProducto);
         }
     }
 
@@ -468,7 +549,10 @@ Producto nuevoProducto;
 system("cls");
 printf("---Borrar Producto---\n\n");
 
-   printf("Ingrese el ID Producto: ");
+
+    printf("Los productos registrados son:\n");
+    mostrarProductosOrdenNombre(vec,tam);
+   printf("Ingrese el ID Producto que desea eliminar: ");
         scanf("%d",&id);
 
         existe = buscarPorIDproducto(vec, tam, id);
@@ -476,6 +560,7 @@ printf("---Borrar Producto---\n\n");
         if(existe == -1)
         {
             printf("\nEl id %d no se encuentra en el sistema\n\n", id);
+            system("pause");
         }
         else{
 
@@ -521,6 +606,8 @@ void modificaProducto(Producto vec[], int tam){
 
     system("cls");
     printf("---Modifica Producto---\n\n");
+    printf("Los productos registrados son:\n");
+    mostrarProductosOrdenNombre(vec,tam);
    printf("Ingrese ID de Producto: ");
         scanf("%d", &id);
 
@@ -529,6 +616,7 @@ void modificaProducto(Producto vec[], int tam){
         if(esta == -1)
         {
             printf("\nEl ID %d no se encuentra en el sistema\n\n", id);
+            system("pause");
 
         }
         else{
@@ -1071,6 +1159,14 @@ printf("|%10s|\n",auxProveedor);
 
 }
 
+/** \brief Contabiliza los productos activos
+ *
+ * \param proveedor El id del proveedor
+ * \param lista El vector de producto
+ * \param tam, Tamalo del array
+ * \return cont la cantidad de productos activos
+ *
+ */
 
 int cantidadProductos(int proveedor, Producto lista[], int tam)
 {
@@ -1086,6 +1182,15 @@ int cantidadProductos(int proveedor, Producto lista[], int tam)
 
     return cont;
 }
+/** \brief Contabiliza la cantidad maxima de productos activos
+ *
+ * \param lista El array de proveedores
+ * \param tam El tamaño del array de proveedores
+ * \param lista2 El array de producto
+ * \param tam2 El tamaño del array de productos
+ * \return maxino La mayor cantidad  de productos activos
+ *
+ */
 
 int maximoProductos(Proveedor lista[], int tam, Producto lista2[], int tam2)
 {
@@ -1102,6 +1207,15 @@ int maximoProductos(Proveedor lista[], int tam, Producto lista2[], int tam2)
     }
     return maximo;
 }
+/** \brief Contabiliza la cantidad minima de productos activos
+ *
+ * \param lista El array de proveedores
+ * \param tam El tamaño del array de proveedores
+ * \param lista2 El array de producto
+ * \param tam2 El tamaño del array de productos
+ * \return minimo La menor cantidad  de productos activos
+ *
+ */
 
 int minimoProductos(Proveedor lista[], int tam, Producto lista2[], int tam2)
 {
@@ -1116,32 +1230,84 @@ int minimoProductos(Proveedor lista[], int tam, Producto lista2[], int tam2)
             flag = 1;
         }
     }
-    return minimo;
-}
+    if(minimo<=0){
+        minimo=1;
+        return minimo;
+    }else{
+        return minimo;
+    }
 
+}
+/** \brief Muetsra el proveedor mas productos incluyendo dichos productos
+ *
+ * \param proveedor El array de proveedores
+ * \param tamPROV El tamaño del array de proveedores
+ * \param productos El array de producto
+ * \param tamPROD El tamaño del array de productos
+ *
+ */
 void proveedorConMasProductos(Proveedor proveedor[], int tamPROV, Producto productos[], int tamPROD)
 {
-    int i, j, cant;
+    int i, j, cant,idprov;
 
     system("cls");
     cant = maximoProductos(proveedor, tamPROV, productos, tamPROD);
-    printf("Proveedor con mas productos:\n\n");
+
+            printf("\n    PROVEEDOR        | NOMBRE PRODUCTO |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK |");
+
     for(i=0; i<tamPROV; i++)
     {
         if(cant==cantidadProductos(proveedor[i].IDProveedor, productos, tamPROD))
         {
             printf("\n\n%s:\n", proveedor[i].Descripcion);
+            idprov = proveedor[i].IDProveedor;
             for(j=0; j<tamPROD; j++)
             {
-                if(productos[j].estado2 == 1 && productos[j].idProveedor == proveedor[i].IDProveedor)
+                if( productos[j].idProveedor == idprov && productos[j].estado2==0)
                 {
-                    printf("\n%s\t\t$%.2f", productos[j].descripcion, productos[j].precio);
+                    printf("\n%30s| %-37s | %9d | %5.2f | %5d |",productos[j].nombreProducto,productos[j].descripcion,productos[j].idProducto,productos[j].precio,productos[j].stock);
                 }
             }
         }
     }
     printf("\n\n");
+
+}
+/** \brief Muetsra el proveedor mas productos incluyendo dichos productos
+ *
+ * \param proveedor El array de proveedores
+ * \param tamPROV El tamaño del array de proveedores
+ * \param productos El array de producto
+ * \param tamPROD El tamaño del array de productos
+ *
+ */
+void proveedorConMenosProductos(Proveedor proveedor[], int tamPROV, Producto productos[], int tamPROD)
+{
+    int i, j, cant,idprov;
+
+    system("cls");
+    cant = minimoProductos(proveedor, tamPROV, productos, tamPROD);
+    printf("%d",cant);
     system("pause");
+            printf("\n PROVEEDOR | NOMBRE PRODUCTO |                  DESCRIPCION        |IDPRODUCTO | PRECIO | STOCK |");
+
+    for(i=0; i<tamPROV; i++)
+    {
+        if(cant==cantidadProductos(proveedor[i].IDProveedor, productos, tamPROD))
+        {
+            printf("\n\n%s:\n", proveedor[i].Descripcion);
+            idprov = proveedor[i].IDProveedor;
+            for(j=0; j<tamPROD; j++)
+            {
+                if( productos[j].idProveedor == idprov && productos[j].estado2==0)
+                {
+                    printf("\n%30s| %-37s | %9d | %5.2f | %5d |",productos[j].nombreProducto,productos[j].descripcion,productos[j].idProducto,productos[j].precio,productos[j].stock);
+                }
+            }
+        }
+    }
+    printf("\n\n");
+
 }
 
 
@@ -1233,11 +1399,11 @@ void Listados(Producto vec[],int tam,Proveedor vec2[],int tam2){
                  system("Pause");
                 break;
              case 9:
-                 proveedorConMasProductos(vec2,tam2,vec,tam);
+                 proveedorConMenosProductos(vec2,tam2,vec,tam);
                   system("Pause");
                 break;
              case 10:
-                 proveedorConMasProductos(vec,tam,vec2,tam2);
+                 proveedorConMasProductos(vec2,tam2,vec,tam);
                  system("pause");
                 break;
              case 11:
