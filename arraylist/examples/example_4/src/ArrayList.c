@@ -16,7 +16,8 @@ int contract(ArrayList* this,int index);
  * \param void
  * \return ArrayList* Return (NULL) if Error [if can't allocate memory]
  *                  - (pointer to new arrayList) if ok
- */
+ *//*Crea y retorna un nuevo ArrayList. Es el constructor, ya que en él daremos valores iniciales a
+las variables y asignaremos las funciones a sus punteros. */
 ArrayList* al_newArrayList(void)
 {
     ArrayList* this;
@@ -154,7 +155,7 @@ int al_len(ArrayList* this)
 void* al_get(ArrayList* this, int index)
 {
     void* returnAux = NULL;
-    if(this!=NULL && index >= 0 && index < al_len(this))
+    if(this!=NULL && index >= 0 && index < this->len(this))
     {
 
         returnAux = *(this->pElements+index);
@@ -214,10 +215,11 @@ array. Si la verificación falla la función retorna (-1) y si tiene éxito (0).
 int al_set(ArrayList* this, int index,void* pElement)
 {
     int returnAux = -1;
-     if(this!=NULL && pElement != NULL && index >= 0 && index < al_len(this)){
-          *(this->pElements+index)=pElement;
-          returnAux=0;
-     }
+    if(this!=NULL && pElement != NULL && index >= 0 && index < this->len(this))
+    {
+        *(this->pElements+index)=pElement;
+        returnAux=0;
+    }
 
     return returnAux;
 }
@@ -228,10 +230,22 @@ int al_set(ArrayList* this, int index,void* pElement)
  * \param index int Index of the element
  * \return int Return (-1) if Error [pList is NULL pointer or invalid index]
  *                  - ( 0) if Ok
+ *//*
+ Elimina un elemento del ArrayList, en el índice especificado. Verificando que el puntero pList
+sea distinto de NULL y que index sea positivo e inferior al tamaño del array. Si la verificación
+falla la función retorna (-1) y si tiene éxito (0).
  */
 int al_remove(ArrayList* this,int index)
 {
     int returnAux = -1;
+    int i,j;
+    if(this!=NULL && index >= 0 && index < this->len(this))
+    {
+        contract(this,index);
+        returnAux=0;
+    }
+
+
 
     return returnAux;
 }
@@ -242,10 +256,23 @@ int al_remove(ArrayList* this,int index)
  * \param pList ArrayList* Pointer to arrayList
  * \return int Return (-1) if Error [pList is NULL pointer]
  *                  - ( 0) if Ok
+ *//*Borra todos los elementos de ArrayList. Verificando que el puntero pList sea distinto de NULL.
+Si la verificación falla la función retorna (-1) y si tiene éxito (0).
  */
 int al_clear(ArrayList* this)
 {
     int returnAux = -1;
+    int i;
+    if(this!=NULL)
+    {
+        for(i=0; i<this->len(this); i++)
+        {
+            free(this->pElements+i);
+            *(this->pElements+i)=NULL;
+        }
+        this->size=0;
+        returnAux=0;
+    }
 
     return returnAux;
 }
@@ -256,10 +283,26 @@ int al_clear(ArrayList* this)
  * \param pList ArrayList* Pointer to arrayList
  * \return ArrayList* Return  (NULL) if Error [pList is NULL pointer]
  *                          - (New array) if Ok
+ *//*Retorna un nuevo ArrayList copia del ArrayList original. Verificando que el puntero pList sea
+distinto de NULL. Si la verificación falla la función retorna (NULL) y si tiene éxito retorna el
+nuevo array.
  */
 ArrayList* al_clone(ArrayList* this)
 {
     ArrayList* returnAux = NULL;
+    int i;
+
+    if(this!=NULL)
+    {
+        returnAux = al_newArrayList();
+        if(returnAux!=NULL)
+        {
+            for(i=0; i<this->len(this); i++)
+            {
+                returnAux->add(returnAux,*(this->pElements+i));
+            }
+        }
+    }
 
     return returnAux;
 }
@@ -273,13 +316,35 @@ ArrayList* al_clone(ArrayList* this)
  * \param pElement void* Pointer to element
  * \return int Return (-1) if Error [pList or pElement are NULL pointer or invalid index]
  *                  - ( 0) if Ok
- */
+ *//*Desplaza los elementos e inserta en la posición index. Verificando que tanto el puntero pList
+como pElement sean distintos de NULL y que index sea positivo e inferior al tamaño del array.
+Si la verificación falla la función retorna (-1) y si tiene éxito (0).*/
 int al_push(ArrayList* this, int index, void* pElement)
 {
     int returnAux = -1;
 
+    if(this != NULL && pElement != NULL && index >=0 && index <=this->len(this))
+    {
+        if(index==this->len(this))
+        {
+            this->add(this,pElement);
+        }
+        else
+        {
+            if(expand(this,index)==0)
+            {
+                *(this->pElements+index) = pElement;
+                returnAux = 0;
+            }
+        }
+
+    }
+
+
     return returnAux;
 }
+
+
 
 
 
@@ -287,11 +352,25 @@ int al_push(ArrayList* this, int index, void* pElement)
  * \param pList ArrayList* Pointer to arrayList
  * \param pElement void* Pointer to element
  * \return int Return (-1) if Error [pList or pElement are NULL pointer] - (index to element) if Ok
- */
+ *//*Retorna el índice de la primera aparición de un elemento (element) en el ArrayList. Verificando
+que tanto el puntero pList como pElement sean distintos de NULL. Si la verificación falla o no
+encuentra el elemento la función retorna (-1) y si encuentra el elemento retorna su índice.
+*/
 int al_indexOf(ArrayList* this, void* pElement)
 {
-    int returnAux = -1;
+    int returnAux = -1,i;
 
+    if(this != NULL && pElement != NULL)
+    {
+        for(i=0;i<this->len(this);i++)
+        {
+            if(*(this->pElements + i) == pElement)
+            {
+                returnAux = i;
+            }
+        }
+
+    }
     return returnAux;
 }
 
@@ -300,10 +379,23 @@ int al_indexOf(ArrayList* this, void* pElement)
 /** \brief Returns true if this list contains no elements.
  * \param pList ArrayList* Pointer to arrayList
  * \return int Return (-1) if Error [pList is NULL pointer] - (0) if Not Empty - (1) if is Empty
- */
+ *//*
+ Retorna cero si contiene elementos y uno si no los tiene. Verificando que el puntero pList sea
+distinto de NULL. Si la verificación falla la función retorna (-1), si esta vacío (1) y si contiene
+elementos (0).
+*/
 int al_isEmpty(ArrayList* this)
 {
     int returnAux = -1;
+    if(this != NULL)
+    {
+        if(this->len(this)>0){
+            returnAux=0;
+        }
+        else{
+            returnAux=1;
+        }
+    }
 
     return returnAux;
 }
@@ -316,10 +408,21 @@ int al_isEmpty(ArrayList* this)
  * \param index int Index of the element
  * \return int Return (NULL) if Error [pList is NULL pointer or invalid index]
  *                  - ( element pointer) if Ok
- */
+ *//*
+ Retorna un puntero al elemento que se encuentra en el índice especificado y luego lo elimina
+de la lista. Verificando que el puntero pList sea distinto de NULL y que index sea positivo e
+inferior al tamaño del array. Si la verificación falla la función retorna (NULL) y si tiene éxito
+retorna el elemento.
+*/
 void* al_pop(ArrayList* this,int index)
 {
     void* returnAux = NULL;
+
+    if(this != NULL ){
+
+       returnAux = this->get(this,index);
+        this->remove(this,index);
+    }
 
     return returnAux;
 }
@@ -332,10 +435,27 @@ void* al_pop(ArrayList* this,int index)
  * \param to int Final index of the element (exclusive)
  * \return int Return (NULL) if Error [pList is NULL pointer or invalid 'from' or invalid 'to']
  *                  - ( pointer to new array) if Ok
- */
+ *//*Retorna un nuevo ArrayList con el subconjunto de elementos. Verificando que el puntero pList
+sea distinto de NULL y que tanto el indice 'from' como 'to' sean positivos e inferiores al tamaño
+del array. Si la verificación falla la función retorna (NULL) y si tiene éxito retorna el nuevo */
 ArrayList* al_subList(ArrayList* this,int from,int to)
 {
-    void* returnAux = NULL;
+    //void* returnAux = NULL;
+    ArrayList* returnAux = NULL;
+    int i,cantidad;
+ if(this != NULL &&  from>=0 && from < to && to <=this->size)    {
+        returnAux =(ArrayList*) al_newArrayList();
+       if(returnAux!=NULL)
+       {
+           for(i=from;i<to;i++)
+            {
+                   //returnAux->add(returnAux,*(this->pElements+i));
+                   returnAux->add( returnAux, this->get(this, i) );
+            }
+       }
+
+        }
+
 
     return returnAux ;
 }
@@ -408,16 +528,22 @@ int expand(ArrayList* this,int index)
 {
     int returnAux = -1, i,j;
 
-    if(this!=NULL && index >= 0  && index < this->size)
+    if (this != NULL && index >= 0 && index <= this->size && this->size > 0)
     {
-        for(i=index; i < this->size ; i++)
+        if(this->reservedSize == this->len(this))
         {
-            j=i+1;
-            *(this->pElements+i)= *(this->pElements+j); // OJO ACA; puede estar un error en el +1
+            resizeUp(this);
         }
-        returnAux=0;
-        this->size--;
+
+        for (i=this->len(this); i>index; i--)
+        {
+            free(this->pElements+j);
+            *(this->pElements+(i+1)) = *(this->pElements+i);
+        }
+        this->size++;
+        returnAux = 0;
     }
+
 
     return returnAux;
 }
@@ -430,7 +556,17 @@ int expand(ArrayList* this,int index)
  */
 int contract(ArrayList* this,int index)
 {
-    int returnAux = -1;
-
+    int returnAux = -1,i,j;
+    if(this!=NULL && index >= 0  && index < this->len(this))
+    {
+        for(i=index; i < this->len(this) ; i++)
+        {
+            j=i+1;
+            free(this->pElements+j);
+            *(this->pElements+i)= *(this->pElements+j);
+        }
+        returnAux=0;
+        this->size--;
+    }
     return returnAux;
 }
