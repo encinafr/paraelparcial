@@ -238,7 +238,6 @@ falla la función retorna (-1) y si tiene éxito (0).
 int al_remove(ArrayList* this,int index)
 {
     int returnAux = -1;
-    int i,j;
     if(this!=NULL && index >= 0 && index < this->len(this))
     {
         contract(this,index);
@@ -442,7 +441,7 @@ ArrayList* al_subList(ArrayList* this,int from,int to)
 {
     //void* returnAux = NULL;
     ArrayList* returnAux = NULL;
-    int i,cantidad;
+    int i;
  if(this != NULL &&  from>=0 && from < to && to <=this->size)    {
         returnAux =(ArrayList*) al_newArrayList();
        if(returnAux!=NULL)
@@ -469,11 +468,34 @@ ArrayList* al_subList(ArrayList* this,int from,int to)
  * \param pList2 ArrayList* Pointer to arrayList
  * \return int Return (-1) if Error [pList or pList2 are NULL pointer]
  *                  - (0) if Not contains All - (1) if is contains All
- */
+ *//*Comprueba si los elementos pasados son contenidos por el ArrayList. Verificando que tanto el
+puntero pList como pList2 sean distintos de NULL. Si la verificación falla o no encuentra el
+elemento la función retorna (-1), si las listas difieren (0) y si ambas listas son iguales retorna
+(1).
+*/
 int al_containsAll(ArrayList* this,ArrayList* this2)
 {
     int returnAux = -1;
+         int i;
 
+    if(this != NULL && this2 != NULL)
+    {
+        if(this->size == this2->size)
+        {
+            for(i=0; i<this->size; i++)
+            {
+                if(*(this->pElements+i)== *(this2->pElements+i))
+                {
+                    returnAux = 1;
+                }
+
+            }
+        }
+        else
+        {
+            returnAux = 0;
+        }
+    }
     return returnAux;
 }
 
@@ -483,10 +505,46 @@ int al_containsAll(ArrayList* this,ArrayList* this2)
  * \param order int  [1] indicate UP - [0] indicate DOWN
  * \return int Return (-1) if Error [pList or pFunc are NULL pointer]
  *                  - (0) if ok
- */
+ *//*Ordena los elementos del array recibiendo como parámetro la función que sera la encargada
+de determinar que elemento es mas grande que otro y si se debe ordenar de manera
+ascendente o descendente. Verificando que tanto el puntero pList como el puntero a la funcion
+pFunc sean distintos de NULL. Si la verificación falla (-1) caso contrario retorna (1).*/
 int al_sort(ArrayList* this, int (*pFunc)(void*,void*), int order)
 {
     int returnAux = -1;
+    int i,j;
+    void* aux;
+
+    if(this != NULL && pFunc !=NULL && (order==0 || order==1))
+    {
+        for(i=0; i<this->size-1; i++)
+        {
+            for(j=i+1; j<this->size; j++)
+            {
+                if(order==0)
+                {
+                    if(pFunc(*(this->pElements+i),*(this->pElements+j))== -1)
+                    {
+                        aux= *(this->pElements+i);
+                        *(this->pElements+i)=*(this->pElements+j);
+                        *(this->pElements+j)= aux;
+
+                    }
+                }
+                else
+                {
+                    if(pFunc(*(this->pElements+i),*(this->pElements+j))== 1)
+                    {
+                        aux= *(this->pElements+i);
+                        *(this->pElements+i)=*(this->pElements+j);
+                        *(this->pElements+j)= aux;
+
+                    }
+                }
+            }
+        }
+        returnAux = 0;
+    }
 
     return returnAux;
 }
@@ -526,7 +584,7 @@ int resizeUp(ArrayList* this)
  */
 int expand(ArrayList* this,int index)
 {
-    int returnAux = -1, i,j;
+    int returnAux = -1, i;
 
     if (this != NULL && index >= 0 && index <= this->size && this->size > 0)
     {
@@ -537,7 +595,7 @@ int expand(ArrayList* this,int index)
 
         for (i=this->len(this); i>index; i--)
         {
-            free(this->pElements+j);
+          //  free(this->pElements+j);
             *(this->pElements+(i+1)) = *(this->pElements+i);
         }
         this->size++;
@@ -562,7 +620,7 @@ int contract(ArrayList* this,int index)
         for(i=index; i < this->len(this) ; i++)
         {
             j=i+1;
-            free(this->pElements+j);
+           // free(this->pElements+j);
             *(this->pElements+i)= *(this->pElements+j);
         }
         returnAux=0;
