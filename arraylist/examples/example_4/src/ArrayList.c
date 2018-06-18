@@ -241,6 +241,10 @@ int al_remove(ArrayList* this,int index)
     if(this!=NULL && index >= 0 && index < this->len(this))
     {
         contract(this,index);
+
+        reserverDown(this);
+
+
         returnAux=0;
     }
 
@@ -643,5 +647,28 @@ int contract(ArrayList* this,int index)
 
 
 
+int reserverDown(ArrayList* this)
+{
+    void** aux;
+    int retorno = -1;
+      if(this!=NULL)
+        {
+            if(this->reservedSize - this->size > AL_INCREMENT)
+            {
+                aux = (void**)realloc(this->pElements,sizeof(void*) * (this->reservedSize - AL_INCREMENT));
+                if(aux!= NULL)
+                    {
+                        this->pElements = aux;
+                        //this->reservedSize -= AL_INCREMENT; es lo mismo
+                        this->reservedSize = this->reservedSize - AL_INCREMENT;
+                        retorno=0;
+                    }
+            }else{
+                retorno=0;
+            }
+
+        }
+  return retorno;
+}
 
 
