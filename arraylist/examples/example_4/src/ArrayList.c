@@ -261,18 +261,26 @@ Si la verificación falla la función retorna (-1) y si tiene éxito (0).
 int al_clear(ArrayList* this)
 {
     int returnAux = -1;
+    void** aux;
     int i;
     if(this!=NULL)
     {
-        for(i=0; i<this->len(this); i++)
+        aux = (void**) realloc (this->pElements,sizeof(void*)* AL_INITIAL_VALUE);
+        if(aux!=NULL)
         {
-            free(this->pElements+i);
-            *(this->pElements+i)=NULL;
-        }
-        this->size=0;
-        returnAux=0;
-    }
+            this->size=0;
+            this->reservedSize = AL_INITIAL_VALUE;
+            this->pElements = aux;
 
+            for(i=0; i<this->len(this); i++)
+            {
+                free(*(this->pElements+i));
+                //*(this->pElements+i)=NULL;
+            }
+
+            returnAux=0;
+        }
+    }
     return returnAux;
 }
 
@@ -361,7 +369,7 @@ int al_indexOf(ArrayList* this, void* pElement)
 
     if(this != NULL && pElement != NULL)
     {
-        for(i=0;i<this->len(this);i++)
+        for(i=0; i<this->len(this); i++)
         {
             if(*(this->pElements + i) == pElement)
             {
@@ -388,10 +396,12 @@ int al_isEmpty(ArrayList* this)
     int returnAux = -1;
     if(this != NULL)
     {
-        if(this->len(this)>0){
+        if(this->len(this)>0)
+        {
             returnAux=0;
         }
-        else{
+        else
+        {
             returnAux=1;
         }
     }
@@ -417,9 +427,10 @@ void* al_pop(ArrayList* this,int index)
 {
     void* returnAux = NULL;
 
-    if(this != NULL ){
+    if(this != NULL )
+    {
 
-       returnAux = this->get(this,index);
+        returnAux = this->get(this,index);
         this->remove(this,index);
     }
 
@@ -442,18 +453,19 @@ ArrayList* al_subList(ArrayList* this,int from,int to)
     //void* returnAux = NULL;
     ArrayList* returnAux = NULL;
     int i;
- if(this != NULL &&  from>=0 && from < to && to <=this->size)    {
+    if(this != NULL &&  from>=0 && from < to && to <=this->size)
+    {
         returnAux =(ArrayList*) al_newArrayList();
-       if(returnAux!=NULL)
-       {
-           for(i=from;i<to;i++)
+        if(returnAux!=NULL)
+        {
+            for(i=from; i<to; i++)
             {
-                   //returnAux->add(returnAux,*(this->pElements+i));
-                   returnAux->add( returnAux, this->get(this, i) );
+                //returnAux->add(returnAux,*(this->pElements+i));
+                returnAux->add( returnAux, this->get(this, i) );
             }
-       }
-
         }
+
+    }
 
 
     return returnAux ;
@@ -476,7 +488,7 @@ elemento la función retorna (-1), si las listas difieren (0) y si ambas listas s
 int al_containsAll(ArrayList* this,ArrayList* this2)
 {
     int returnAux = -1;
-         int i;
+    int i;
 
     if(this != NULL && this2 != NULL)
     {
@@ -595,7 +607,7 @@ int expand(ArrayList* this,int index)
 
         for (i=this->len(this); i>index; i--)
         {
-          //  free(this->pElements+j);
+            //  free(this->pElements+j);
             *(this->pElements+(i+1)) = *(this->pElements+i);
         }
         this->size++;
@@ -620,7 +632,7 @@ int contract(ArrayList* this,int index)
         for(i=index; i < this->len(this) ; i++)
         {
             j=i+1;
-           // free(this->pElements+j);
+            // free(this->pElements+j);
             *(this->pElements+i)= *(this->pElements+j);
         }
         returnAux=0;
@@ -628,3 +640,8 @@ int contract(ArrayList* this,int index)
     }
     return returnAux;
 }
+
+
+
+
+
