@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1529543104 source:c:\users\encin\desktop\parcialconarraylist\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"ArrayList.h"
+	"lista.h"
+
+1529509880 source:c:\users\encin\desktop\parcialconarraylist\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1529510580 c:\users\encin\desktop\parcialconarraylist\arraylist.h
+
+1529542896 c:\users\encin\desktop\parcialconarraylist\lista.h
+	"ArrayList.h"
+
+1529544173 source:c:\users\encin\desktop\parcialconarraylist\lista.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"ArrayList.h"
+	"lista.h"
+
