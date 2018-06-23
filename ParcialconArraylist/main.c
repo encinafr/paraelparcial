@@ -13,10 +13,6 @@ int main()
     int opcion;
     cargarArchivoTXT(lista);
     cargarArchivo(lista);
-    system("cls");
-    printf("Bienvenido.\n\ncargando datos...");
-    Sleep(500);
-
     do
     {
         system("cls");

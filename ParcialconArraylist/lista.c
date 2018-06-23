@@ -9,36 +9,36 @@
 int menu(ArrayList* this)
 {
     char opcion[20];
-    int esNum;
+    int Num;
 
     system("cls");
     printf("\n\n1.Alta\n2.Modificacion\n3.Baja Logica\n4.Baja Fisica\n5.Listar\n6.Guardar y salir\n\ningrese: ");
 
     fflush(stdin);
     scanf("%[^\n]", opcion);
-    esNum = validar_num(opcion);
+    Num = validar_int(opcion);
 
-    while(esNum == 1)
+    while(Num == 1)
     {
         system("cls");
         printf("\n\n1.Alta\n2.Modificacion\n3.Baja Logica\n4.Baja Fisica\n5.Listar\n6.Guardar y salir\n\ningrese: ");
         fflush(stdin);
         scanf("%[^\n]", opcion);
-        esNum = validar_num(opcion);
+        Num = validar_int(opcion);
     }
 
-    esNum = atoi(opcion);
+    Num = atoi(opcion);
 
-    return esNum;
+    return Num;
 }
 
-int validar_num(char* opcion)
+int validar_int(char* opcion)
 {
-    int i, flag = 0, size;
+    int i, flag = 0, tamanio;
 
-    size = strlen(opcion);
+    tamanio = strlen(opcion);
 
-    for(i=0; i<size; i++)
+    for(i=0; i<tamanio; i++)
     {
         if(*(opcion+i) < 48  || *(opcion+i) > 57)
         {
@@ -192,9 +192,8 @@ float getPrecio(eProducto* Producto)
 void alta(ArrayList* this)
 {
     eProducto* Producto;
-    int id,existe;
+    int id,existe,cantidad;
     float precio;
-    int cantidad;
     char Descripcion[51];
 
     if(this != NULL)
@@ -266,8 +265,7 @@ int buscarID(ArrayList* this, int id)
 void bajaFisica(ArrayList* this)
 {
     eProducto* Producto = newProducto();
-    int buscar;
-    int id;
+    int buscar,id;
     char opcion;
 
     if(this != NULL && Producto != NULL && this->isEmpty(this) != 1)
@@ -309,8 +307,7 @@ void bajaFisica(ArrayList* this)
 void bajaLogica(ArrayList* this)
 {
     eProducto* Producto = newProducto();
-    int buscar;
-    int id;
+    int buscar,id;
     char opcion;
 
     if(this != NULL && Producto != NULL && this->isEmpty(this) != 1)
@@ -350,6 +347,7 @@ void bajaLogica(ArrayList* this)
         system("pause");
     }
 }
+
 void Modificacion(ArrayList* this)
 {
     eProducto* Producto = newProducto();
@@ -465,38 +463,7 @@ void mostrarProducto(eProducto* Producto)
 {
     printf("%-5d%-20s%-5.2f %5d\n", getid(Producto), getDescripcion(Producto), getPrecio(Producto), getCantidad(Producto));
 }
-/*
-void pintarLineas(ArrayList* this)
-{
-    int i, size;
-    size = this->len(this) +2;
 
-    for(i=0; i<size; i++)
-    {
-        gotoxy(4, i);
-        printf("%c", 186);
-        gotoxy(24, i);
-        printf("%c", 186);
-        gotoxy(31, i);
-        printf("%c", 186);
-        gotoxy(42, i);
-        printf("%c", 186);
-    }
-    for(i=0; i<43; i++)
-    {
-        gotoxy(i, size);
-        printf("%c", 205);
-    }
-    gotoxy(4, size);
-    printf("%c", 202);
-    gotoxy(24, size);
-    printf("%c", 202);
-    gotoxy(31, size);
-    printf("%c", 202);
-    gotoxy(42, size);
-    printf("%c", 188);
-}
-*/
 void mostrarProductos(ArrayList* this)
 {
     int i;
@@ -518,10 +485,8 @@ void mostrarProductos(ArrayList* this)
                 if(Producto->estado==1)
                 mostrarProducto(Producto);
             }
-          //  pintarLineas(this);
         }
         printf("\n\n");
-
     }
 }
 
@@ -697,13 +662,5 @@ void cargarArchivo(ArrayList* this)
     }
 }
 
-void gotoxy(int x, int y)
-{
-    HANDLE hcon;
-    hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD dwPos;
-    dwPos.X = x;
-    dwPos.Y= y;
-    SetConsoleCursorPosition(hcon,dwPos);
-}
+
 
