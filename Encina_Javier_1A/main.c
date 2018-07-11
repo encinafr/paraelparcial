@@ -1,75 +1,109 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "producto.h"
-#define TAM 100
-#define UNI 1000
+#include "ArrayList.h"
+#include "lista.h"
 
+
+#define ESC 27
 int main()
 {
-    int flag=0;
-    char salir='s';
-    int opcion;
+    char opcion;
+    ArrayList* subLista;
+    NumeroNatural* auxLista;
+    ArrayList* lista = al_newArrayList();
+    int id,desde,hasta,indice,i,parser;
+    char auxCad[100],eliminar;
+    if(lista == NULL)
+    {
+        printf("No se pudo reservar memoria");
+        exit(1);
+    }
+    FILE* archivo = fopen("datos.csv", "r");
+    if(archivo == NULL)
+    {
+        printf("No se pudo abrir el archivo");
+        exit(1);
+    }
 
-    Proveedor NewProveedor[TAM];
-    Producto NewProducto[UNI];
-    inicializarProveedor(NewProveedor,TAM);
-    inicializarProducto(NewProducto,UNI);
-    hardCodeProveedores(NewProveedor,1,"Marolio",1);
-    hardCodeProveedores(NewProveedor,2,"Knort",2);
-    hardCodeProveedores(NewProveedor,3,"Mayorista Sol",3);
-    hardCodeProveedores(NewProveedor,4,"Walmart",4);
-    hardCodeProveedores(NewProveedor,5,"Easy",5);
-
-    //hardCodeProducto(Producto ProductoArray[],int POS,char nombreAux[],char Descripcion[],int codePro,int codeAux2,int Stock,int Importe)
-    hardCodeProducto(NewProducto,1,"Harina","Altas tortas fritas",1,1,10,2000);
-    hardCodeProducto(NewProducto,2,"MAIz","sopa",2,1,10,20);
-    hardCodeProducto(NewProducto,3,"Caldos","Para el guizo",3,2,20,1);
-    hardCodeProducto(NewProducto,4,"Papel","Para todo",4,3,50,1);
-    hardCodeProducto(NewProducto,5,"Cerveza","Para el refrescar el gallote",5,4,2,10);
-    hardCodeProducto(NewProducto,6,"Amoladora","Para laburar",6,5,100,1000);
-    while(salir == 's')
+    do
     {
         system("cls");
-        printf("----MENU PRINCIPAL---\n\n");
-        printf("1- ALTA PROVEEDOR\n");
-        printf("2- AGREGAR PRODUCTO\n");
-        printf("3- MODIFICAR PRODUCTO:\n");
-        printf("4- CANCELAR PRODUCTO:\n");
-        printf("5- INFORMES:\n");
-        printf("6- LISTADOS:\n");
-        printf("7- SALIR\n");
+        printf("/****************************************************\n\n");
+        printf("MENU:\n\n");
+        printf("1- ALTA\n");
+        printf("2- COMPLETAR\n");
+        printf("3- LISTAR\n");
+        printf("4- GENERAR\n");
+        printf("Presione ESC para salir\n");
+        printf("\n\n/****************************************************\n");
 
-        scanf("%d",&opcion);
+        opcion = getch();
+
         switch(opcion)
         {
-            case 1:
-                agregarProveedor(NewProveedor,TAM);
-                break;
-            case 2:
+        case '1':
+            parser = parserLista(archivo, lista);
+            if(parser==0)
+            {
+                printf("Accion Realizada con exito\n");
+                /* for( i=0; i < lista->len(lista); i++)
+                 {
+                     auxLista = (NumeroNatural*)lista->get(lista, i);
+                     Listar(auxLista);
+                 }*/
+            }
 
-                agregarProducto(NewProducto,UNI,NewProveedor,TAM);
-                break;
-            case 3 :
-                modificaProducto(NewProducto,UNI);
-            break;
-            case 4 :
-                borrarProducto(NewProducto,UNI);
-            break;
-            case 5:
-              Informes(NewProducto,UNI);
-                    break;
-            case 6:
-                Listados(NewProducto,UNI,NewProveedor,TAM);
-                break;
-                  //  system("pause");
-            case 7:
-                salir='n';
-            break;
-             default:
-                        printf("Opcion incorrecta");
-                        system("pause");
 
+            //system("pause");
+            system("pause");
+            break;
+        case '2':
+            esPar(lista);
+            esImpar(lista);
+
+
+             for( i=0; i < lista->len(lista); i++)
+                 {
+
+                     auxLista = (NumeroNatural*)lista->get(lista, i);
+                     esPrimo(auxLista);
+                     Listar(auxLista);
+
+                 }
+
+            system("pause");
+
+
+            system("pause");
+            break;
+        case '3':
+            ordenar(lista);
+            esPar(lista);
+            esImpar(lista);
+
+
+             for( i=0; i < lista->len(lista); i++)
+                 {
+
+                     auxLista = (NumeroNatural*)lista->get(lista, i);
+                     esPrimo(auxLista);
+                     Listar(auxLista);
+
+                 }
+
+            system("pause");
+            break;
+        case '4':
+            //ordenar de manera descendente
+
+            break;
+
+            break;
+        case 'ESC':
+            break;
         }
     }
+    while(opcion != ESC);
+
     return 0;
 }
