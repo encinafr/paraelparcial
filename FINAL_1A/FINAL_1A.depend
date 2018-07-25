@@ -1,0 +1,39 @@
+# depslib dependency file v1.0
+1529509882 source:d:\final_1a\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1529510582 d:\final_1a\arraylist.h
+
+1532527849 source:d:\final_1a\lista.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"ArrayList.h"
+	"lista.h"
+	"parser.h"
+	<ctype.h>
+
+1532519754 d:\final_1a\lista.h
+	"ArrayList.h"
+
+1532527610 source:d:\final_1a\main.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"lista.h"
+	"parser.h"
+	<ctype.h>
+
+1529783814 d:\final_1a\parser.h
+
+1532526563 source:d:\final_1a\parser.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"lista.h"
+
