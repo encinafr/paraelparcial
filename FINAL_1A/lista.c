@@ -155,14 +155,22 @@ char* getLetra(eProducto* Producto)
 }
 
 
-/*
-void ordenar(ArrayList* this)
+
+void ordenarAscendente(ArrayList* this)
 {
-    this->sort(this,compararProductos,1);
+    this->sort(this,compararProductos(),1);
 
     printf("lista ordenada!!\n\n");
     system("pause");
 }
+void ordenarDescendente(ArrayList* this)
+{
+    this->sort(this,compararProductos(),0);
+
+    printf("lista ordenada!!\n\n");
+    system("pause");
+}
+
 
 int compararProductos(void* ProductoA,void* ProductoB)
 {
@@ -171,12 +179,10 @@ int compararProductos(void* ProductoA,void* ProductoB)
 
         eProducto* pA = (eProducto*) ProductoA;
         eProducto* pB = (eProducto*) ProductoB;
-        return strcmp(pA->Descripcion, pB->Descripcion);
+        return strcmp(pA->nombre, pB->nombre);
     }
     return 0;
 }
-*/
-
 
 
 
@@ -254,23 +260,24 @@ int esVocal(ArrayList* Letras)
         {
             aux = (eProducto*)Letras->get(Letras,i);
 
-            strcpy(minuscula,aux->letra);
-            minuscula = tolower(minuscula);
-                if( strcmp(aux->letra,comp)==0 ||strcmp(aux->letra,comp1)==0 ||strcmp(aux->letra,comp2)==0 ||strcmp(aux->letra,comp3)==0||strcmp(aux->letra,comp4)==0 && esSoloLetras(aux->letra)==1 )
-                {
-                    aux->vocal=1;
-                    retorno=0;
+            soloMinuscula(aux,aux->letra);
+            if( strcmp(aux->letra,comp)==0 ||strcmp(aux->letra,comp1)==0 ||strcmp(aux->letra,comp2)==0 ||strcmp(aux->letra,comp3)==0||strcmp(aux->letra,comp4)==0 && esSoloLetras(aux->letra)==1 )
+            {
+                aux->vocal=1;
+                retorno=0;
 
-                }else{
-                    aux->consonante=1;
-                }
-                printf("%5d %-20s%-20s%-10d% d%\n",i+1,aux ->letra,getNombre(aux),aux->vocal,aux->consonante);
+            }
+            else
+            {
+                aux->consonante=1;
+            }
+            printf("%5d %-20s%-20s%-10d% d%\n",i+1,aux ->letra,getNombre(aux),aux->vocal,aux->consonante);
         }
 
-system("pause");
+        system("pause");
 
         return retorno;
-}
+    }
 
 
 }
@@ -280,12 +287,57 @@ system("pause");
 
 int esSoloLetras(char str[])
 {
-   int i=0;
-   while(str[i] != '\0')
-   {
-       if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z'))
-           return 0;
-       i++;
-   }
-   return 1;
+    int i=0;
+    while(str[i] != '\0')
+    {
+        if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z'))
+            return 0;
+        i++;
+    }
+    return 1;
+}
+
+
+//Fijate como mcomparar cada letra de una cadena con cada caracter
+int soloMinuscula(eProducto* Producto,char str[])
+{
+    int i=0;
+    str = tolower(str);
+    setLetra(Producto,str);
+    return 1;
+}
+ArrayList* depurarLista (ArrayList* repetidos,char cadena[])
+{
+    int i=0;
+    int j=0;
+    int flag=0;
+    int s=0;
+    eProducto* numeroA;
+
+    if(repetidos != NULL)
+    {
+
+        for(i=0; i<repetidos->len(repetidos); i++)
+        {
+            numeroA = (eProducto*)repetidos->get(repetidos,i);
+            while(numeroA->letra[i] != '\0' && cadena[j] != '\0')
+            {
+                if(numeroA->letra[i] ==  cadena[j]) {
+                                printf("%5d %-20s%-20s%-10d% d%\n",s+1,numeroA->letra,getNombre(numeroA),numeroA->vocal,numeroA->consonante);
+
+                }
+                i++;
+                j++;
+            }
+            system("pause");
+        }
+    }
+
+
+
+    system("cls");
+    printf("Lista depurada.\n");
+    system("pause");
+
+
 }

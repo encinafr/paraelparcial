@@ -7,7 +7,7 @@
 
 1529510582 d:\final_1a\arraylist.h
 
-1532527849 source:d:\final_1a\lista.c
+1532530056 source:d:\final_1a\lista.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -21,7 +21,7 @@
 1532519754 d:\final_1a\lista.h
 	"ArrayList.h"
 
-1532527610 source:d:\final_1a\main.c
+1532530119 source:d:\final_1a\main.c
 	<stdio.h>
 	<stdlib.h>
 	"ArrayList.h"

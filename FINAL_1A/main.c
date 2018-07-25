@@ -59,16 +59,18 @@ int main()
 
                 break;
             case '3':
-              /*  printf("Ingrese cadena\n");
-                scanf("%s",cadena);
 
+                printf("Ingrese cadena\n");
+                        scanf("%s",cadena);
                 validar=esSoloLetras(cadena);
                 while(validar!=1){
-
+                        printf("Ingrese cadena\n");
+                        scanf("%s",cadena);
                 }
+                depurarLista(lista,cadena);
 
 
-                */
+
 
                 break;
             case '4':
