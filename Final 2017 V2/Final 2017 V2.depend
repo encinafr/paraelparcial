@@ -1,0 +1,73 @@
+# depslib dependency file v1.0
+1511354840 source:f:\usuarios\alumno\escritorio\facu\programacion i - lab i\final 2017 v2\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1510752496 f:\usuarios\alumno\escritorio\facu\programacion i - lab i\final 2017 v2\arraylist.h
+
+1512525865 source:f:\usuarios\alumno\escritorio\facu\programacion i - lab i\final 2017 v2\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+	"ArrayList.h"
+
+1512523124 source:f:\usuarios\alumno\escritorio\facu\programacion i - lab i\final 2017 v2\main.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"funciones.h"
+
+1512523152 f:\usuarios\alumno\escritorio\facu\programacion i - lab i\final 2017 v2\funciones.h
+	"ArrayList.h"
+
+1511354840 source:c:\users\encin\desktop\final 2017 v2\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1510752496 c:\users\encin\desktop\final 2017 v2\arraylist.h
+
+1512525865 source:c:\users\encin\desktop\final 2017 v2\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+	"ArrayList.h"
+
+1512523152 c:\users\encin\desktop\final 2017 v2\funciones.h
+	"ArrayList.h"
+
+1512523124 source:c:\users\encin\desktop\final 2017 v2\main.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"funciones.h"
+
+1511354842 source:e:\programacion en c\2doparcial\final 2017 v2\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1510752498 e:\programacion en c\2doparcial\final 2017 v2\arraylist.h
+
+1512525866 source:e:\programacion en c\2doparcial\final 2017 v2\funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+	"ArrayList.h"
+
+1512523154 e:\programacion en c\2doparcial\final 2017 v2\funciones.h
+	"ArrayList.h"
+
+1512523126 source:e:\programacion en c\2doparcial\final 2017 v2\main.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"funciones.h"
+
