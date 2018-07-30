@@ -31,3 +31,35 @@
 	"ArrayList.h"
 	"lista.h"
 
+1531707152 source:e:\encina_javier_1a\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1531707152 e:\encina_javier_1a\arraylist.h
+
+1532961756 source:e:\encina_javier_1a\main.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"lista.h"
+
+1532958710 e:\encina_javier_1a\lista.h
+	"ArrayList.h"
+
+1532956840 source:e:\encina_javier_1a\parser.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"lista.h"
+
+1532961732 source:e:\encina_javier_1a\lista.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"ArrayList.h"
+	"lista.h"
+

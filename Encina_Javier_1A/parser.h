@@ -1,2 +1,2 @@
 
-int parserLista(FILE* pFile , ArrayList* pArrayListEmployee);
+int parserLista (FILE* archivo,ArrayList *Numero);

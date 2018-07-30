@@ -6,31 +6,6 @@
 #include "ArrayList.h"
 #include "lista.h"
 
-int menu(ArrayList* this)
-{
-    char opcion[20];
-    int Num;
-
-    system("cls");
-    printf("\n\n1.Alta\n2.Completar\n3.Listar\n4.Generar Archiuvo\n\ningrese: ");
-
-    fflush(stdin);
-    scanf("%[^\n]", opcion);
-    Num = validar_int(opcion);
-
-    while(Num == 1)
-    {
-        system("cls");
-        printf("\n\n1.Alta\n2.Modificacion\n3.Baja Logica\n4.Baja Fisica\n5.Listar\n6.Guardar y salir\n\ningrese: ");
-        fflush(stdin);
-        scanf("%[^\n]", opcion);
-        Num = validar_int(opcion);
-    }
-
-    Num = atoi(opcion);
-
-    return Num;
-}
 
 int validar_int(char* opcion)
 {
@@ -49,196 +24,68 @@ int validar_int(char* opcion)
 
     return flag;
 }
-int setNum(NumeroNatural* Numero, int num)
+void Listar(NumeroNatural* this)
 {
-    int aux = -1;
-
-    if(Numero != NULL)
+    if(this != NULL)
     {
-        if(num > 0 )
+        printf("%d\t%d\t%16s\t%d\t%d\t%d\n",this->numero,this->nombre,this->par,this->impar,this->primo);
+    }
+}
+void funcionParImparPrimo (NumeroNatural* num)
+{
+    int numero,i,a=0;
+
+    numero = getNumero(num);
+
+    if (numero%2 == 0)
+    {
+        num->par = 1;
+        num->impar = 0;
+    }
+    else
+    {
+        num->par = 0;
+        num-> impar = 1;
+    }
+
+    for(i=1; i<=numero; i++)
+    {
+        if(numero%i==0)
         {
-            Numero->numero = num;
-            aux = 0;
-        }
-    }
-
-    return aux;
-}
-
-int getNum(NumeroNatural* Numero)
-{
-    int aux;
-
-    if(Numero != NULL)
-    {
-        aux = Numero->numero;
-    }
-    return aux;
-}
-
-int getPar(NumeroNatural* Numero)
-{
-    int aux;
-
-    if(Numero != NULL)
-    {
-        aux = Numero->par;
-    }
-    return aux;
-}
-
-int getImpar(NumeroNatural* Numero)
-{
-    int aux;
-
-    if(Numero != NULL)
-    {
-        aux = Numero->impar;
-    }
-    return aux;
-}
-int getPrimo(NumeroNatural* Numero)
-{
-    int aux;
-
-    if(Numero != NULL)
-    {
-        aux = Numero->primo;
-    }
-    return aux;
-}
-int setPar(NumeroNatural* Numero, int Par)
-{
-    int aux = -1;
-
-    if(Numero != NULL)
-    {
-        if(Par == 0 || Par == 1)
-        {
-            Numero->par = Par;
-            aux = 0;
-        }
-    }
-
-    return aux;
-}
-
-int setImpar(NumeroNatural* Numero, int Impar)
-{
-    int aux = -1;
-
-    if(Numero != NULL)
-    {
-        if(Impar == 0 || Impar == 1)
-        {
-            Numero->impar = Impar;
-            aux = 0;
-        }
-    }
-
-    return aux;
-}
-int setPrimo(NumeroNatural* Numero, int Primo)
-{
-    int aux = -1;
-
-    if(Numero != NULL)
-    {
-        if(Primo == 0 || Primo == 1)
-        {
-            Numero->primo = Primo;
-            aux = 0;
-        }
-    }
-
-    return aux;
-}
-int setNombre(NumeroNatural* Numero, char* Nombre)
-{
-    int aux = -1;
-
-    if(Numero != NULL)
-    {
-        if(strlen(Nombre) > 0 && strlen(Nombre) < 51)
-        {
-            strcpy(Numero->nombre, Nombre);
-            aux = 0;
-        }
-    }
-
-    return aux;
-}
-
-char* getNombre(NumeroNatural* Numero)
-{
-    char* aux = (char*) malloc(sizeof(char)*50);
-
-    if(Numero != NULL && aux != NULL)
-    {
-        strcpy(aux, Numero->numero);
-    }
-    return aux;
-}
-
-void Listar(NumeroNatural* Numero)
-{
-    printf("%-5d%-20s%-5d-%5d-%5d\n", Numero->numero, Numero->nombre, Numero->par, Numero->impar, Numero->primo);
-}
-
-int esPar(ArrayList* lista)
-{
-    int i;
-    int aux = -1;
-    NumeroNatural* auxNumero;
-    if(lista!=NULL)
-    {
-        for(i=0; i<lista->len(lista); i++)
-        {
-            auxNumero= (NumeroNatural*) lista->get(lista,i);
-            if(auxNumero->numero %2==0)
-            {
-                auxNumero->par=1;
-                aux =1;
-            }
-        }
-    }
-    return aux;
-}
-int esImpar(ArrayList* lista)
-{
-    int i;
-    int aux = -1;
-    NumeroNatural* auxNumero;
-    if(lista!=NULL)
-    {
-        for(i=0; i<lista->len(lista); i++)
-        {
-            auxNumero= (NumeroNatural*) lista->get(lista,i);
-            if(!(auxNumero->numero %2==0))
-            {
-                auxNumero->impar=1;
-                aux =1;
-            }
-        }
-    }
-    return aux;
-}
-int esPrimo(NumeroNatural* auxNumero)
-{
-    int i,j;
-    int aux;
-    int a=0;
-
-    for(i=1; i<=auxNumero->numero; i++)
-    {
-        if(auxNumero->numero%i==0) // si num1 módulo de i es 0, incrementamos a en 1.
             a++;
-    }
-    if(a==2)
-    {
-        auxNumero->primo=1;
+        }
     }
 
+    if(a == 2)
+    {
+        num->primo = 1;
+    }
+    else
+    {
+        num->primo = 0;
+    }
+
+}
+
+void completarCampos(ArrayList* num)
+{
+    int i;
+    NumeroNatural* aux;
+
+    if(num != NULL)
+    {
+        for(i=0; i<num->len(num); i++)
+        {
+            aux = (NumeroNatural*)num->get(num,i);
+
+            if(aux!= NULL)
+            {
+                funcionParImparPrimo(aux);
+
+                num->set(num,i,aux);
+            }
+        }
+    }
 }
 
 NumeroNatural* NuevoNumero(void)
@@ -257,54 +104,326 @@ NumeroNatural* NuevoNumero(void)
     return returnAux;
 
 }
-void mostrarTodo(ArrayList* this)
-{
-    int i;
-    NumeroNatural* Numero = NuevoNumero();
 
-    if(this != NULL && Numero != NULL)
+
+int compararNumeros(void* numeroA,void* numeroB)
+{
+    NumeroNatural* numA;
+    NumeroNatural* numB;
+
+    int respuesta;
+
+    if(numA != NULL && numB != NULL)
     {
-        system("cls");
-        if(this->isEmpty(this) == 1)
+        numA = (NumeroNatural*)numeroA;
+        numB = (NumeroNatural*)numeroB;
+
+        if(numA->numero > numB->numero)
         {
-            printf("La lista esta vacia.\n");
+            respuesta = 1;
+        }
+        else if(numA->numero < numB->numero)
+        {
+            respuesta = -1;
         }
         else
         {
-            for(i=0; i<this->len(this); i++)
-            {
-                Numero = (NumeroNatural*)this->get(this, i);
-
-                Listar(Numero);
-                printf("i\n");
-            }
+            respuesta = 0;
         }
-        printf("\n\n");
+
+        return respuesta;
+    }
+
+    return 0;
+}
+
+void ordenarDescendente (ArrayList* num)
+{
+    if(num != NULL)
+    {
+        num->sort(num,compararNumeros,0);
     }
 }
 
-void ordenar(ArrayList* this)
+void ordenarAscendente (ArrayList* num)
 {
-    this->sort(this,compararProductos(),1);
-
-    printf("lista ordenada!!\n\n");
-    system("pause");
+    if(num != NULL)
+    {
+        num->sort(num,compararNumeros,1);
+    }
 }
 
-int compararProductos(void* A,void* B)
+ArrayList* depurarLista (ArrayList* repetidos)
 {
-    if(A != NULL && B != NULL)
+    int i,j,flag;
+    NumeroNatural* numeroA;
+    NumeroNatural* numeroB;
+
+    if(repetidos != NULL)
     {
 
-        NumeroNatural* pA = (NumeroNatural*) A;
-        NumeroNatural* pB = (NumeroNatural*) B;
-        if(pA->numero = pB->numero){
-            return 0;
+        for(i=0; i<repetidos->len(repetidos); i++)
+        {
+            numeroA = (NumeroNatural*)repetidos->get(repetidos,i);
+
+            for(j=i+1; j<repetidos->len(repetidos); j++)
+            {
+                numeroB = (NumeroNatural*)repetidos->get(repetidos,j);
+
+                if(numeroA->numero == numeroB->numero && strcmpi(numeroA->nombre,numeroB->nombre)== 0)
+                {
+                    repetidos->remove(repetidos,j);
+                }
+            }
         }
 
+        /** hago doble depuramiento porque me seguia mostrando algunos repetidos **/
+
+        for(i=0; i<repetidos->len(repetidos); i++)
+        {
+            numeroA = (NumeroNatural*)repetidos->get(repetidos,i);
+
+            for(j=i+1; j<repetidos->len(repetidos); j++)
+            {
+                numeroB = (NumeroNatural*)repetidos->get(repetidos,j);
+
+                if(numeroA->numero == numeroB->numero && strcmpi(numeroA->nombre,numeroB->nombre)== 0)
+                {
+                    repetidos->remove(repetidos,j);
+                }
+            }
+        }
+
+
+        system("cls");
+        printf("Lista depurada.\n");
+        system("pause");
+
     }
-return 0;
+
+    return repetidos;
 
 }
+ArrayList* depurarLista2 (ArrayList* repetidos)
+{
+    int i,j,flag;
+    NumeroNatural* numeroA;
+    NumeroNatural* numeroB;
 
+    if(repetidos != NULL)
+    {
+
+        for(i=0; i<repetidos->len(repetidos); i++)
+        {
+            numeroA = (NumeroNatural*)repetidos->get(repetidos,i);
+
+            for(j=i+1; j<repetidos->len(repetidos); j++)
+            {
+                numeroB = (NumeroNatural*)repetidos->get(repetidos,j);
+
+                if(numeroA->numero == 14 || numeroA->numero == 106 || numeroA->numero == 64)
+                {
+                    repetidos->remove(repetidos,j);
+                }
+            }
+        }
+
+        /** hago doble depuramiento porque me seguia mostrando algunos repetidos **/
+
+
+        system("cls");
+        printf("Lista depurada.\n");
+        system("pause");
+
+    }
+
+    return repetidos;
+
+}
+void mostrarNumeros (ArrayList* numeros)
+{
+    int i,flag = 0;
+    NumeroNatural* aux;
+
+    if(numeros != NULL && numeros->isEmpty(numeros) == 0)
+    {
+        system("cls");
+
+        for (i=0; i<numeros->len(numeros); i++)
+        {
+            aux = (NumeroNatural*)numeros->get(numeros,i);
+            if(flag == 0)
+            {
+                printf("i     Numero    Nombre\t            Par\t      Impar     Primo\n");
+                flag = 1;
+            }
+
+            printf("%-6d%-10d%-20s%-10d%-10d%d\n",i+1,getNumero(aux),getNombre(aux),getPar(aux),getImpar(aux),getPrimo(aux));
+        }
+
+        system("pause");
+    }
+    else if(numeros->isEmpty(numeros)==1)
+    {
+        printf("No hay numeros ingresados.\n");
+        system("pause");
+    }
+}
+
+
+
+
+int setNombre (NumeroNatural* numero,char* nombre)
+{
+    int aux = -1;
+
+    if(numero != NULL && nombre != NULL)
+    {
+        if(strlen(nombre)>0 && strlen(nombre)<50)
+        {
+            strcpy(numero->nombre,nombre);
+            aux = 0;
+        }
+    }
+
+    return aux;
+}
+
+int setNumero(NumeroNatural* numero,char* num)
+{
+    int aux = -1,auxNum;
+
+    if(numero != NULL && num != NULL)
+    {
+
+        auxNum = atoi(num);
+
+        if(auxNum>=0)
+        {
+            numero->numero = auxNum;
+            aux = 0;
+        }
+    }
+
+    return aux;
+}
+
+int setPar(NumeroNatural* numero,char* num)
+{
+    int aux = -1,auxNum;
+
+    if(numero != NULL && num != NULL)
+    {
+
+        auxNum = atoi(num);
+
+        if(auxNum == 0 || auxNum == 1)
+        {
+            numero->par = auxNum;
+            aux = 0;
+        }
+    }
+
+    return aux;
+}
+
+int setImpar(NumeroNatural* numero,char* num)
+{
+    int aux = -1,auxNum;
+
+    if(numero != NULL && num != NULL)
+    {
+
+        auxNum = atoi(num);
+
+        if(auxNum == 0 || auxNum == 1)
+        {
+            numero->impar = auxNum;
+            aux = 0;
+        }
+    }
+
+    return aux;
+}
+
+int setPrimo(NumeroNatural* numero,char* num)
+{
+    int aux = -1,auxNum;
+
+    if(numero != NULL && num != NULL)
+    {
+
+        auxNum = atoi(num);
+
+        if(auxNum == 0 || auxNum == 1)
+        {
+            numero->primo = auxNum;
+            aux = 0;
+        }
+    }
+
+    return aux;
+}
+
+int getNumero(NumeroNatural* num)
+{
+    int aux;
+
+    if(num!= NULL)
+    {
+        aux = num->numero;
+    }
+
+    return aux;
+}
+
+char* getNombre (NumeroNatural* num)
+{
+    char* aux;
+
+    aux = (char*)malloc(sizeof(char)*50);
+
+    if(aux!= NULL && num != NULL)
+    {
+        strcpy(aux,num->nombre);
+    }
+
+    return aux;
+}
+
+int getPar(NumeroNatural* num)
+{
+    int aux;
+
+    if(num!= NULL)
+    {
+        aux = num->par;
+    }
+
+    return aux;
+}
+
+int getImpar(NumeroNatural* num)
+{
+    int aux;
+
+    if(num!= NULL)
+    {
+        aux = num->impar;
+    }
+
+    return aux;
+}
+
+int getPrimo(NumeroNatural* num)
+{
+    int aux;
+
+    if(num!= NULL)
+    {
+        aux = num->primo;
+    }
+
+    return aux;
+}
 

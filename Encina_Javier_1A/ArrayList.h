@@ -40,7 +40,6 @@ struct ArrayList{
     struct ArrayList* (* clone)();
     struct ArrayList* (*subList)();
     int     (*deleteArrayList)();
-
 }typedef ArrayList;
 #endif
 
@@ -230,7 +229,6 @@ int expand(ArrayList* this,int index);
  *                  - ( 0) if Ok
  */
 int contract(ArrayList* this,int index);
-int reserverDown(ArrayList* this);
 
 
 // Private function

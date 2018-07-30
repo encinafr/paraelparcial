@@ -3,42 +3,38 @@
 #include "ArrayList.h"
 #include "lista.h"
 
-
-int parserLista(FILE* pFile , ArrayList* pArrayList)
+int parserLista (FILE* archivo,ArrayList *Numero)
 {
-    char auxNum[10];
-    char auxNombre[51];
-    char par[51];
-    char impar[10];
-    char primo[10];
-    int i;
-    NumeroNatural* nuevoNumero;
-
-    if(pFile == NULL || pArrayList == NULL){
-            return -1;
-    }
-
-    fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%s\n", auxNum, auxNombre, par, impar,primo);
-
-    while(!feof(pFile)){
-    fscanf(pFile, "%[^,],%[^,],%[^,],%[^,],%s\n", auxNum, auxNombre, par, impar,primo);
-
-         nuevoNumero = NuevoNumero();
-         if(nuevoNumero !=NULL){
-            nuevoNumero->numero = atoi(auxNum);
-            strcpy(nuevoNumero->nombre, auxNombre);
-            nuevoNumero->par = atoi(par);
-            nuevoNumero->impar = atoi(impar);
-            nuevoNumero->primo = atoi(primo);
+    NumeroNatural* lista;
+    char nombre[50];
+    char numero[50];
+    char  par[50];
+    char impar[50];
+    char primo[50];
+    int cant;
 
 
 
-                pArrayList->add(pArrayList, nuevoNumero);
-                Listar(nuevoNumero);
+    if(archivo != NULL && numero != NULL)
+    {
+        cant = fscanf(archivo,"%[^,],%[^,],%[^,],%[^,],%[^\n]\n",numero,nombre,par,impar,primo);
 
+        while(!feof(archivo))
+        {
+            cant = fscanf(archivo,"%[^,],%[^,],%[^,],%[^,],%[^\n]\n",numero,nombre,par,impar,primo);
+            lista= NuevoNumero();
+            if(lista!=NULL)
+            {
+                setNombre(lista,nombre);
+                setNumero(lista,numero);
+                setPar(lista,par);
+                setImpar(lista,impar);
+                setPrimo(lista,primo);
             }
 
-         }
-         fclose(pFile);
-    return 0;
+            Numero->add(Numero,lista);
+        }
+    }
+
+    fclose(archivo);
 }
