@@ -8,49 +8,7 @@
 #include "parser.h"
 #include <ctype.h>
 
-int menu(ArrayList* this)
-{
-    char opcion[20];
-    int Num;
 
-    system("cls");
-    printf("\n\n1.Alta\n2.Modificacion\n3.Baja Logica\n4.Baja Fisica\n5.Listar\n6.Guardar y salir\n\ningrese: ");
-
-    fflush(stdin);
-    scanf("%[^\n]", opcion);
-    Num = validar_int(opcion);
-
-    while(Num == 1)
-    {
-        system("cls");
-        printf("\n\n1.Alta\n2.Modificacion\n3.Baja Logica\n4.Baja Fisica\n5.Listar\n6.Guardar y salir\n\ningrese: ");
-        fflush(stdin);
-        scanf("%[^\n]", opcion);
-        Num = validar_int(opcion);
-    }
-
-    Num = atoi(opcion);
-
-    return Num;
-}
-
-int validar_int(char* opcion)
-{
-    int i, flag = 0, tamanio;
-
-    tamanio = strlen(opcion);
-
-    for(i=0; i<tamanio; i++)
-    {
-        if(*(opcion+i) < 48  || *(opcion+i) > 57)
-        {
-            flag = 1;
-            break;
-        }
-    }
-
-    return flag;
-}
 int setvocal(eProducto* Producto, int vocal)
 {
     int aux = -1;
@@ -123,8 +81,6 @@ int setLetra(eProducto* Producto, char* Letra)
     char validar;
     if(Producto != NULL)
     {
-
-
         strcpy(Producto->letra, Letra);
         aux = 0;
     }
@@ -145,7 +101,7 @@ char* getNombre(eProducto* Producto)
 
 char* getLetra(eProducto* Producto)
 {
-    char* aux = (char*) malloc(sizeof(char));
+    char* aux = (char*) malloc(sizeof(char)*2);
 
     if(Producto != NULL && aux != NULL)
     {
@@ -156,34 +112,17 @@ char* getLetra(eProducto* Producto)
 
 
 
-void ordenarAscendente(ArrayList* this)
+int compararNumeros(void* pEmployeeA,void* pEmployeeB)
 {
-    this->sort(this,compararProductos(),1);
-
-    printf("lista ordenada!!\n\n");
-    system("pause");
-}
-void ordenarDescendente(ArrayList* this)
-{
-    this->sort(this,compararProductos(),0);
-
-    printf("lista ordenada!!\n\n");
-    system("pause");
-}
-
-
-int compararProductos(void* ProductoA,void* ProductoB)
-{
-    if(ProductoA != NULL && ProductoB != NULL)
+    if(pEmployeeA != NULL && pEmployeeB != NULL)
     {
 
-        eProducto* pA = (eProducto*) ProductoA;
-        eProducto* pB = (eProducto*) ProductoB;
-        return strcmp(pA->nombre, pB->nombre);
+        eProducto* empA = (eProducto*) pEmployeeA;
+        eProducto* empB = (eProducto*) pEmployeeB;
+        return strcmp(empA->letra, empB->letra);
     }
     return 0;
 }
-
 
 
 
@@ -215,7 +154,9 @@ void employee_print(eProducto* this)
 }
 void mostrarNumeros (ArrayList* numeros)
 {
-    int i,flag = 0;
+    int j=0;
+    int flag = 0;
+    int i;
     eProducto* aux;
 
     if(numeros != NULL && numeros->isEmpty(numeros) == 0)
@@ -224,6 +165,7 @@ void mostrarNumeros (ArrayList* numeros)
 
         for (i=0; i<numeros->len(numeros); i++)
         {
+            j++;
             aux = (eProducto*)numeros->get(numeros,i);
             if(flag == 0)
             {
@@ -231,7 +173,7 @@ void mostrarNumeros (ArrayList* numeros)
                 flag = 1;
             }
 
-            printf("%5d %-20s%-20s%-10d%d\n",i+1,aux ->letra,getNombre(aux),getvocal(aux),getConsonante(aux));
+            printf("%5d %-20s%-20s%-10d%d\n",j+1,getLetra(aux),getNombre(aux),getvocal(aux),getConsonante(aux));
         }
 
         system("pause");
@@ -247,6 +189,7 @@ int esVocal(ArrayList* Letras)
 {
     eProducto* aux;
     int i;
+    int j=0;
     char comp[2] = "a";
     char comp1[2] = "e";
     char comp2[2] = "i";
@@ -258,10 +201,12 @@ int esVocal(ArrayList* Letras)
     {
         for(i=0; i<Letras->len(Letras); i++)
         {
+            j++;
             aux = (eProducto*)Letras->get(Letras,i);
 
-            soloMinuscula(aux,aux->letra);
-            if( strcmp(aux->letra,comp)==0 ||strcmp(aux->letra,comp1)==0 ||strcmp(aux->letra,comp2)==0 ||strcmp(aux->letra,comp3)==0||strcmp(aux->letra,comp4)==0 && esSoloLetras(aux->letra)==1 )
+            strlwr(aux->letra);
+            if(cuentaVocales(aux->letra)>0)
+                //if( strcmp(aux->letra,comp)==0 ||strcmp(aux->letra,comp1)==0 ||strcmp(aux->letra,comp2)==0 ||strcmp(aux->letra,comp3)==0||strcmp(aux->letra,comp4)==0 && esSoloLetras(aux->letra)==1 )
             {
                 aux->vocal=1;
                 retorno=0;
@@ -271,7 +216,8 @@ int esVocal(ArrayList* Letras)
             {
                 aux->consonante=1;
             }
-            printf("%5d %-20s%-20s%-10d% d%\n",i+1,aux ->letra,getNombre(aux),aux->vocal,aux->consonante);
+            printf("%5d %-20s%-20s%-10d% d%\n",j+1,aux ->letra,getNombre(aux),aux->vocal,aux->consonante);
+            // employee_print(aux);
         }
 
         system("pause");
@@ -282,7 +228,25 @@ int esVocal(ArrayList* Letras)
 
 }
 
+int cuentaVocales(char*s)
+{
+    int cont=0;
 
+    while(*s) //mientras que no sea nulo
+    {
+        switch(*s)
+        {
+        case 'a':
+        case 'e':
+        case 'i':
+        case 'o':
+        case 'u':
+            cont++;
+        }
+        s++;
+    }
+    return cont;
+}
 
 
 int esSoloLetras(char str[])
@@ -299,45 +263,138 @@ int esSoloLetras(char str[])
 
 
 //Fijate como mcomparar cada letra de una cadena con cada caracter
-int soloMinuscula(eProducto* Producto,char str[])
+
+ArrayList* depurarLista (ArrayList* repetidos, char cadena[])
 {
-    int i=0;
-    str = tolower(str);
-    setLetra(Producto,str);
-    return 1;
-}
-ArrayList* depurarLista (ArrayList* repetidos,char cadena[])
-{
-    int i=0;
-    int j=0;
+    int i,j,s;
+    int x=0;
     int flag=0;
-    int s=0;
     eProducto* numeroA;
+    ArrayList* ListaCopia = al_newArrayList();
 
     if(repetidos != NULL)
     {
-
         for(i=0; i<repetidos->len(repetidos); i++)
         {
             numeroA = (eProducto*)repetidos->get(repetidos,i);
-            while(numeroA->letra[i] != '\0' && cadena[j] != '\0')
+            for(j=0; j<strlen(cadena); j++)
             {
-                if(numeroA->letra[i] ==  cadena[j]) {
-                                printf("%5d %-20s%-20s%-10d% d%\n",s+1,numeroA->letra,getNombre(numeroA),numeroA->vocal,numeroA->consonante);
-
+                for(s=0; s<strlen(numeroA->letra); s++)
+                {
+                    if(cadena[j] == numeroA->letra[s])
+                    {
+                        ListaCopia->add(ListaCopia,numeroA);
+                        //printf("%5d %-20s%-20s%-10d% d%\n",s+1,numeroA->letra,getNombre(numeroA),numeroA->vocal,numeroA->consonante);
+                        // system("pause");
+                    }
                 }
-                i++;
-                j++;
             }
-            system("pause");
+        }
+    }
+    return ListaCopia;
+}
+
+
+ArrayList* depurarLista2 (ArrayList* repetidos,ArrayList* lista)
+{
+    int i,j,s;
+    int x=0;
+    int flag=0;
+    eProducto* numeroA;
+    ArrayList* ListaCopia = al_newArrayList();
+
+    if(repetidos != NULL)
+    {
+        for(i=0; i<repetidos->len(repetidos); i++)
+        {
+            numeroA = (eProducto*)repetidos->get(repetidos,i);
+
+            if(repetidos->contains(lista,numeroA)==0)
+            {
+                ListaCopia->add(ListaCopia,numeroA);
+                //printf("%5d %-20s%-20s%-10d% d%\n",s+1,numeroA->letra,getNombre(numeroA),numeroA->vocal,numeroA->consonante);
+                // system("pause");
+            }
+        }
+    }
+    return ListaCopia;
+}
+
+
+ArrayList* quitarRepetidos(ArrayList* repetidos)
+{
+    int i,j,s;
+    int x=0;
+    int flag=0;
+    eProducto* numeroA;
+    eProducto* numeroB;
+
+    if(repetidos != NULL)
+    {
+        for(i=0; i<repetidos->len(repetidos)-1; i++)
+        {
+            numeroA = (eProducto*)repetidos->get(repetidos,i);
+
+            for(j=i+1; j<repetidos->len(repetidos); j++)
+            {
+                numeroB = (eProducto*)repetidos->get(repetidos,j);
+
+                if(strcmpi(numeroA->nombre,numeroB->nombre)== 0)
+                {
+                    repetidos->remove(repetidos,j);
+                }
+            }
+        }
+
+         for(i=0; i<repetidos->len(repetidos)-1; i++)
+        {
+            numeroA = (eProducto*)repetidos->get(repetidos,i);
+
+            for(j=i+1; j<repetidos->len(repetidos); j++)
+            {
+                numeroB = (eProducto*)repetidos->get(repetidos,j);
+
+                if(strcmpi(numeroA->nombre,numeroB->nombre)== 0)
+                {
+                    repetidos->remove(repetidos,j);
+                }
+            }
+        }
+
+
+    }
+    return repetidos;
+}
+
+
+
+int generarArchivo(char* nombre,ArrayList* lista)
+{
+    FILE* archivo;
+    eProducto* aux;
+    int retorno = -1,i,cantidad;
+
+    if(nombre != NULL)
+    {
+        archivo = fopen(nombre,"w");
+
+        if(archivo != NULL && lista != NULL)
+        {
+            printf("entre aca");
+            getch();
+            for(i=0;i<lista->len(lista);i++)
+            {
+                aux = (eProducto*)lista->get(lista,i);
+
+                fprintf(archivo,"%S,%s,%d,%d,\n",getLetra(aux),getNombre(aux),getvocal(aux),getConsonante(aux));
+            }
+
+            retorno = 0;
         }
     }
 
+    fclose(archivo);
 
-
-    system("cls");
-    printf("Lista depurada.\n");
-    system("pause");
-
+    return retorno;
 
 }

@@ -2,10 +2,19 @@
 
 typedef struct
 {
-    char letra[30];
+    char letra[2];
     char nombre[22];
     int vocal;
     int consonante;
 } eProducto;
 
 
+int compararNumeros(void* pEmployeeA,void* pEmployeeB);
+ArrayList* depurarLista (ArrayList* repetidos,char cadena[]);
+int esSoloLetras(char str[]);
+int cuentaVocales(char*s);
+int esVocal(ArrayList* Letras);
+void mostrarNumeros (ArrayList* numeros);
+eProducto* constructor();
+ArrayList* depurarLista2 (ArrayList* repetidos,ArrayList* lista);
+ArrayList* quitarRepetidos(ArrayList* repetidos);

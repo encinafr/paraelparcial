@@ -25,14 +25,15 @@ int parserEmployee(FILE* pFile , ArrayList* pArrayListEmployee)
          if(nuevoEmpleado !=NULL){
             nuevoEmpleado->vocal = atoi(auxEmpty);
             strcpy(nuevoEmpleado->nombre, auxNombre);
-            strcpy(nuevoEmpleado->letra, auxInt);
+            if(esSoloLetras(auxInt)!= 0){
+                strcpy(nuevoEmpleado->letra, auxInt);
+            }
+
             nuevoEmpleado->consonante = atoi(auxEmpty);
 
             }
-
-
                 pArrayListEmployee->add(pArrayListEmployee, nuevoEmpleado);
-                        printf("%5d %-20s%-20s%-10d%d\n",i+1,nuevoEmpleado->letra,getNombre(nuevoEmpleado),getvocal(nuevoEmpleado),getConsonante(nuevoEmpleado));
+                        //printf("%5d %-20s%-20s%-10d%d\n",i+1,nuevoEmpleado->letra,getNombre(nuevoEmpleado),getvocal(nuevoEmpleado),getConsonante(nuevoEmpleado));
 
             }
 
