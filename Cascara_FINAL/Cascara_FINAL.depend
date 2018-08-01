@@ -1,0 +1,77 @@
+# depslib dependency file v1.0
+1531707151 source:c:\users\encin\desktop\cascara_final\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1531707151 c:\users\encin\desktop\cascara_final\arraylist.h
+
+1533005419 source:c:\users\encin\desktop\cascara_final\lista.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"ArrayList.h"
+	"lista.h"
+	"parser.h"
+	<ctype.h>
+
+1532818520 c:\users\encin\desktop\cascara_final\lista.h
+	"ArrayList.h"
+
+1532530353 c:\users\encin\desktop\cascara_final\parser.h
+
+1533005142 source:c:\users\encin\desktop\cascara_final\main.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"lista.h"
+	"parser.h"
+	<ctype.h>
+
+1533005722 source:c:\users\encin\desktop\cascara_final\parser.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"lista.h"
+
+1531707152 source:d:\cascara_final\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1531707152 d:\cascara_final\arraylist.h
+
+1533130458 source:d:\cascara_final\main.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"lista.h"
+	"parser.h"
+	<ctype.h>
+
+1533126629 d:\cascara_final\lista.h
+	"ArrayList.h"
+
+1532530354 d:\cascara_final\parser.h
+
+1533125476 source:d:\cascara_final\parser.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"lista.h"
+
+1533130458 source:d:\cascara_final\lista.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<conio.h>
+	<windows.h>
+	"ArrayList.h"
+	"lista.h"
+	"parser.h"
+	<ctype.h>
+
